@@ -1,287 +1,215 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>lldb-help | pandamac&#39;s github pages</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="lldb-help | pandamac&#39;s github pages">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="some lldb tips 通用 计算偏移&#x2F;ida地址 观察断点 读取目标地址的内存指令 dis-a$pc 反汇编指定地址 f2:切换到当前调用栈为2的位置，也就是bt中的frame #2。 threadinfo:输出当前线程的信息。 b ptrace -c xxx:满足某个条件之后程序才会中断。 help&#x2F;apropos 断点后执行命令 xcode预处理快捷键 pdb来排查了一个脚本中的问题">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"pandamac.github.io","root":"/","scheme":"Muse","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="some lldb tips 通用 计算偏移&#x2F;ida地址 观察断点 读取目标地址的内存指令 dis-a$pc 反汇编指定地址 切换分支 threadinfo:输出当前线程的信息。 b ptrace -c xxx:满足某个条件之后程序才会中断。 help&#x2F;apropos 断点后执行命令 xcode预处理快捷键 pdb来排查了一个脚本中的问题 如何将断点设置在动态库的入口 基本的类：   andro">
 <meta name="keywords" content="study">
 <meta property="og:type" content="article">
 <meta property="og:title" content="lldb-help">
 <meta property="og:url" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;02&#x2F;23&#x2F;lldb-help&#x2F;index.html">
 <meta property="og:site_name" content="pandamac&#39;s github pages">
-<meta property="og:description" content="some lldb tips 通用 计算偏移&#x2F;ida地址 观察断点 读取目标地址的内存指令 dis-a$pc 反汇编指定地址 f2:切换到当前调用栈为2的位置，也就是bt中的frame #2。 threadinfo:输出当前线程的信息。 b ptrace -c xxx:满足某个条件之后程序才会中断。 help&#x2F;apropos 断点后执行命令 xcode预处理快捷键 pdb来排查了一个脚本中的问题">
+<meta property="og:description" content="some lldb tips 通用 计算偏移&#x2F;ida地址 观察断点 读取目标地址的内存指令 dis-a$pc 反汇编指定地址 切换分支 threadinfo:输出当前线程的信息。 b ptrace -c xxx:满足某个条件之后程序才会中断。 help&#x2F;apropos 断点后执行命令 xcode预处理快捷键 pdb来排查了一个脚本中的问题 如何将断点设置在动态库的入口 基本的类：   andro">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;02&#x2F;23&#x2F;lldb-help&#x2F;pic&#x2F;1.jpg">
 <meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;02&#x2F;23&#x2F;lldb-help&#x2F;pic&#x2F;2.jpg">
-<meta property="og:updated_time" content="2020-02-23T05:39:52.531Z">
+<meta property="og:updated_time" content="2020-02-23T07:32:03.122Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;02&#x2F;23&#x2F;lldb-help&#x2F;pic&#x2F;1.jpg">
 
+<link rel="canonical" href="http://pandamac.github.io/2020/02/23/lldb-help/">
 
-<link rel="icon" href="/img/avatar.jpg">
 
-<link href="/css/style.css?v=1.0.1" rel="stylesheet">
-
-<link href="/css/hl_theme/atom-light.css?v=1.0.1" rel="stylesheet">
-
-<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
-<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script src="/js/jquery.autocomplete.min.js?v=1.0.1" ></script>
-
-<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-<script>
-    hljs.initHighlightingOnLoad();
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
 </script>
 
-<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <title>lldb-help | pandamac's github pages</title>
+  
 
 
 
-<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
 
-<script src="/js/iconfont.js?v=1.0.1" ></script>
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
 
 </head>
-<div style="display: none">
-  <input class="theme_disqus_on" value="false">
-  <input class="theme_preload_comment" value="false">
-  <input class="theme_blog_path" value="">
-</div>
 
-<body>
-<aside class="nav">
-    <div class="nav-left">
-        <a href="/" class="avatar_target">
-    <img class="avatar" src="/img/avatar.jpg" />
-</a>
-<div class="author">
-    <span>pandamac</span>
-</div>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
 
-<div class="icon">
-    
-        
-        <a title="rss" href="/atom.xml" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-rss"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="github" href="https://github.com/pandamac" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-github"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-        <a title="email" href="mailto:pandashellcode@gmail.com" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-email"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-    
-        
-        <a title="kugou" href="https://www.kugou.com/" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-kugou"></use>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="neteasemusic" href="https://music.163.com/#/user/home?id=88151013" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-neteasemusic"></use>
-                </svg>
-            
-        </a>
-        
-    
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">pandamac's github pages</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right"></div>
 </div>
 
 
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
 
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
 
-<ul>
-    <li><div class="all active">全部文章<small>(3)</small></div></li>
-    
-</ul>
-<div class="left-bottom">
-    <div class="menus">
-    
-    
-    
-    
-    </div>
-    <div><a class="about  hasFriend  site_url"  href="/about">关于</a><a style="width: 50%"  class="friends">友链</a></div>
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="3">
-
-<div style="display: none">
-    <span id="busuanzi_value_site_uv"></span>
-    <span id="busuanzi_value_site_pv"></span>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
 </div>
 
-    </div>
-    <div class="nav-right">
-        <div class="friends-area">
-    <div class="friends-title">
-        友情链接
-        <i class="back-title-list"></i>
-    </div>
-    <div class="friends-content">
-        <ul>
+  
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
             
-            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
-            
-        </ul>
-    </div>
-</div>
-        <div class="title-list">
-    <form onkeydown="if(event.keyCode==13){return false;}">
-        <input class="search" type="text" placeholder="Search..." autocomplete="off"id="local-search-input" >
-        <i class="cross"></i>
-        <span>
-            <label for="tagswitch">Tags:</label>
-            <input id="tagswitch" type="checkbox" style="display: none" />
-            <i id="tagsWitchIcon"></i>
-        </span>
-    </form>
-    <div class="tags-list">
-    
-    <div class="clearfix"></div>
-</div>
 
-    
-    <nav id="title-list-nav">
-        
-        <a  class=""
-           href="/2019/10/22/test-hexo/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title="test hexo">test hexo</span>
-            <span class="post-date" title="2019-10-22 17:12:39">2019/10/22</span>
-        </a>
-        
-        <a  class=""
-           href="/2020/02/23/lldb-help/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title="lldb-help">lldb-help</span>
-            <span class="post-date" title="2020-02-23 13:29:19">2020/02/23</span>
-        </a>
-        
-        <a  class=""
-           href="/2020/02/22/%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BAdocset/"
-           data-tag=""
-           data-author="" >
-            <span class="post-title" title="如何创建docset">如何创建docset</span>
-            <span class="post-date" title="2020-02-22 00:28:40">2020/02/22</span>
-        </a>
-        
-    </nav>
-</div>
-    </div>
-    <div class="hide-list">
-        <div class="semicircle">
-            <div class="brackets first"><</div>
-            <div class="brackets">&gt;</div>
-        </div>
-    </div>
-</aside>
-<div class="post">
-    <div class="pjax">
-        <article id="post-lldb-help" class="article article-type-post" itemscope itemprop="blogPost">
-    
-        <h1 class="article-title">lldb-help</h1>
-    
-    <div class="article-meta">
-        
-        
-        
-        
-    </div>
-    <div class="article-meta">
-        
-        创建时间:<time class="date" title='更新时间: 2020-02-23 13:39:52'>2020-02-23 13:29</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        
-        <span id="busuanzi_container_page_pv">
-            阅读:<span id="busuanzi_value_page_pv">
-                <span class="count-comment">
-                    <span class="spinner">
-                      <div class="cube1"></div>
-                      <div class="cube2"></div>
-                    </span>
-                </span>
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://pandamac.github.io/2020/02/23/lldb-help/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="pandamac">
+      <meta itemprop="description" content="pandamac's github pages">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pandamac's github pages">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          lldb-help
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-02-23 13:29:19 / Modified: 15:32:03" itemprop="dateCreated datePublished" datetime="2020-02-23T13:29:19+08:00">2020-02-23</time>
             </span>
-        </span>
-        
-        
-    </div>
+
+          
+
+        </div>
+      </header>
+
     
-    <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#some-lldb-tips"><span class="toc-text">some lldb tips</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#通用"><span class="toc-text">通用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#计算偏移-ida地址"><span class="toc-text">计算偏移/ida地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#观察断点"><span class="toc-text">观察断点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#读取目标地址的内存指令"><span class="toc-text">读取目标地址的内存指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dis-a-pc-反汇编指定地址"><span class="toc-text">dis-a$pc 反汇编指定地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#f2-切换到当前调用栈为2的位置，也就是bt中的frame-2。"><span class="toc-text">f2:切换到当前调用栈为2的位置，也就是bt中的frame #2。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#threadinfo-输出当前线程的信息。"><span class="toc-text">threadinfo:输出当前线程的信息。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#b-ptrace-c-xxx-满足某个条件之后程序才会中断。"><span class="toc-text">b ptrace -c xxx:满足某个条件之后程序才会中断。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#help-apropos"><span class="toc-text">help/apropos</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#断点后执行命令"><span class="toc-text">断点后执行命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xcode预处理快捷键"><span class="toc-text">xcode预处理快捷键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pdb来排查了一个脚本中的问题"><span class="toc-text">pdb来排查了一个脚本中的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何将断点设置在动态库的入口"><span class="toc-text">如何将断点设置在动态库的入口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本的类："><span class="toc-text">基本的类：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#android"><span class="toc-text">android</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS"><span class="toc-text">iOS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#砸壳"><span class="toc-text">砸壳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询按钮事件"><span class="toc-text">查询按钮事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chisel-打印结构"><span class="toc-text">chisel 打印结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#搜索UITextField的实例对象和Cycript中的choose—样的"><span class="toc-text">搜索UITextField的实例对象和Cycript中的choose—样的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看对象内存关系-xcode观看"><span class="toc-text">查看对象内存关系,xcode观看</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#执行script"><span class="toc-text">执行script</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在-Snapchat模块中查看与login有关的符号信息"><span class="toc-text">在 Snapchat模块中查看与login有关的符号信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#某个类的所有方法下断点并跟踪打印调用参数"><span class="toc-text">某个类的所有方法下断点并跟踪打印调用参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xcode-设置环境变量"><span class="toc-text">xcode 设置环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS-分析常见点"><span class="toc-text">iOS 分析常见点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#macos"><span class="toc-text">macos</span></a></li></ol></li></ol>
     
-<style>
-    .left-col .switch-btn,
-    .left-col .switch-area {
-        display: none;
-    }
-    .toc-level-3 i,
-    .toc-level-3 ol {
-        display: none !important;
-    }
-</style>
-</div>
-    
-    <div class="article-entry" itemprop="articleBody">
+    <div class="post-body" itemprop="articleBody">
+
       
         <ul>
 <li><a href="#some-lldb-tips">some lldb tips</a><ul>
@@ -290,7 +218,7 @@
 <li><a href="#%e8%a7%82%e5%af%9f%e6%96%ad%e7%82%b9">观察断点</a></li>
 <li><a href="#%e8%af%bb%e5%8f%96%e7%9b%ae%e6%a0%87%e5%9c%b0%e5%9d%80%e7%9a%84%e5%86%85%e5%ad%98%e6%8c%87%e4%bb%a4">读取目标地址的内存指令</a></li>
 <li><a href="#dis-apc-%e5%8f%8d%e6%b1%87%e7%bc%96%e6%8c%87%e5%ae%9a%e5%9c%b0%e5%9d%80">dis-a$pc 反汇编指定地址</a></li>
-<li><a href="#f2%e5%88%87%e6%8d%a2%e5%88%b0%e5%bd%93%e5%89%8d%e8%b0%83%e7%94%a8%e6%a0%88%e4%b8%ba2%e7%9a%84%e4%bd%8d%e7%bd%ae%e4%b9%9f%e5%b0%b1%e6%98%afbt%e4%b8%ad%e7%9a%84frame-2">f2:切换到当前调用栈为2的位置，也就是bt中的frame #2。</a></li>
+<li><a href="#%e5%88%87%e6%8d%a2%e5%88%86%e6%94%af">切换分支</a></li>
 <li><a href="#threadinfo%e8%be%93%e5%87%ba%e5%bd%93%e5%89%8d%e7%ba%bf%e7%a8%8b%e7%9a%84%e4%bf%a1%e6%81%af">threadinfo:输出当前线程的信息。</a></li>
 <li><a href="#b-ptrace--c-xxx%e6%bb%a1%e8%b6%b3%e6%9f%90%e4%b8%aa%e6%9d%a1%e4%bb%b6%e4%b9%8b%e5%90%8e%e7%a8%8b%e5%ba%8f%e6%89%8d%e4%bc%9a%e4%b8%ad%e6%96%ad">b ptrace -c xxx:满足某个条件之后程序才会中断。</a></li>
 <li><a href="#helpapropos">help/apropos</a></li>
@@ -318,11 +246,13 @@
 <li><a href="#macos">macos</a><h1 id="some-lldb-tips"><a href="#some-lldb-tips" class="headerlink" title="some lldb tips"></a>some lldb tips</h1><h2 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h2><h3 id="计算偏移-ida地址"><a href="#计算偏移-ida地址" class="headerlink" title="计算偏移/ida地址"></a>计算偏移/ida地址</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p/x 0X000000010095ECCC+0X0000000000038000</span><br><span class="line">(lldb) p/x 0x0000000100e595b4-0x0000000000038000 (long) $18 = 0x0000000100e215b4</span><br><span class="line">查看某个地址所在模块的信息</span><br></pre></td></tr></table></figure>
 <h3 id="观察断点"><a href="#观察断点" class="headerlink" title="观察断点"></a>观察断点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watchpoint set expression -w write ―- 0xl01801a48 :给某个地址设置观察断点,内存进行写操作时就会触发断点</span><br></pre></td></tr></table></figure>
 <h3 id="读取目标地址的内存指令"><a href="#读取目标地址的内存指令" class="headerlink" title="读取目标地址的内存指令"></a>读取目标地址的内存指令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x/10xg 0xl01801a48 这里的x 表示用十六进制来显示结果。&quot;g&quot;代表giant word(8字节)大小。所以就是用十六进制显示 0x101801a48所指恐惧的10个64位的元素内容。常见的大小格式为&quot;b-byte&quot;(1字节),&quot;h-half word&quot;(2字节),&quot;w- word”(4字节),&quot;g-giantword”(8字节)。</span><br></pre></td></tr></table></figure>
-<h3 id="dis-a-pc-反汇编指定地址"><a href="#dis-a-pc-反汇编指定地址" class="headerlink" title="dis-a$pc 反汇编指定地址"></a>dis-a$pc 反汇编指定地址</h3>这里是pc寄存器所对应的地址。</li>
+<h3 id="dis-a-pc-反汇编指定地址"><a href="#dis-a-pc-反汇编指定地址" class="headerlink" title="dis-a$pc 反汇编指定地址"></a>dis-a$pc 反汇编指定地址</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这里是pc寄存器所对应的地址。</span><br></pre></td></tr></table></figure>
+<h3 id="切换分支"><a href="#切换分支" class="headerlink" title="切换分支"></a>切换分支</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f2:切换到当前调用栈为2的位置，也就是bt中的frame #2。</span><br></pre></td></tr></table></figure>
+<h3 id="threadinfo-输出当前线程的信息。"><a href="#threadinfo-输出当前线程的信息。" class="headerlink" title="threadinfo:输出当前线程的信息。"></a>threadinfo:输出当前线程的信息。</h3></li>
 </ul>
 </li>
 </ul>
-<h3 id="f2-切换到当前调用栈为2的位置，也就是bt中的frame-2。"><a href="#f2-切换到当前调用栈为2的位置，也就是bt中的frame-2。" class="headerlink" title="f2:切换到当前调用栈为2的位置，也就是bt中的frame #2。"></a>f2:切换到当前调用栈为2的位置，也就是bt中的frame #2。</h3><h3 id="threadinfo-输出当前线程的信息。"><a href="#threadinfo-输出当前线程的信息。" class="headerlink" title="threadinfo:输出当前线程的信息。"></a>threadinfo:输出当前线程的信息。</h3><h3 id="b-ptrace-c-xxx-满足某个条件之后程序才会中断。"><a href="#b-ptrace-c-xxx-满足某个条件之后程序才会中断。" class="headerlink" title="b ptrace -c xxx:满足某个条件之后程序才会中断。"></a>b ptrace -c xxx:满足某个条件之后程序才会中断。</h3><h3 id="help-apropos"><a href="#help-apropos" class="headerlink" title="help/apropos"></a>help/apropos</h3><h3 id="断点后执行命令"><a href="#断点后执行命令" class="headerlink" title="断点后执行命令"></a>断点后执行命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">b +[Manager performLoginWithUsernameOnEmail: password: preAuthToken: twoFAMethod: confirmReactivation: rememberDevice:fromDeepLink:onComplete:]</span><br><span class="line">Breakpoint 2: where = Snapchat&apos;+[Manager</span><br><span class="line">br com add 2</span><br><span class="line">&gt; po $x2</span><br><span class="line">&gt; po $x3</span><br><span class="line">&gt; c</span><br><span class="line">&gt; DONE</span><br></pre></td></tr></table></figure>
+<h3 id="b-ptrace-c-xxx-满足某个条件之后程序才会中断。"><a href="#b-ptrace-c-xxx-满足某个条件之后程序才会中断。" class="headerlink" title="b ptrace -c xxx:满足某个条件之后程序才会中断。"></a>b ptrace -c xxx:满足某个条件之后程序才会中断。</h3><h3 id="help-apropos"><a href="#help-apropos" class="headerlink" title="help/apropos"></a>help/apropos</h3><h3 id="断点后执行命令"><a href="#断点后执行命令" class="headerlink" title="断点后执行命令"></a>断点后执行命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">b +[Manager performLoginWithUsernameOnEmail: password: preAuthToken: twoFAMethod: confirmReactivation: rememberDevice:fromDeepLink:onComplete:]</span><br><span class="line">Breakpoint 2: where = Snapchat&apos;+[Manager</span><br><span class="line">br com add 2</span><br><span class="line">&gt; po $x2</span><br><span class="line">&gt; po $x3</span><br><span class="line">&gt; c</span><br><span class="line">&gt; DONE</span><br></pre></td></tr></table></figure>
 <h3 id="xcode预处理快捷键"><a href="#xcode预处理快捷键" class="headerlink" title="xcode预处理快捷键"></a>xcode预处理快捷键</h3><p>单击 Product -&gt; PerformAction -&gt;Preprocess xxxx 可以对文件进行预处理，还可以将代码转换成汇编代码。可以帮助我们理解这些宏的作用</p>
 <h3 id="pdb来排查了一个脚本中的问题"><a href="#pdb来排查了一个脚本中的问题" class="headerlink" title="pdb来排查了一个脚本中的问题"></a>pdb来排查了一个脚本中的问题</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">(lldb) findclass</span><br><span class="line">error: libarclite_macosx.a(arclite.o) failed to load objfile for /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/arc/libarclite_macosx.a</span><br><span class="line">error: libarclite_macosx.a(arclite.o) failed to load objfile for /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/arc/libarclite_macosx.a</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;/Users/gogleyin/lldb/findclass.py&quot;, line 40, in findclass</span><br><span class="line">    raise AssertionError(&quot;Uhoh... something went wrong, can you figure it out? :]&quot;)</span><br><span class="line">AssertionError: Uhoh... something went wrong, can you figure it out? :]</span><br><span class="line"></span><br><span class="line">(lldb) script import pdb</span><br><span class="line">(lldb) findclass</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;/Users/gogleyin/lldb/findclass.py&quot;, line 40, in findclass</span><br><span class="line">    raise AssertionError(&quot;Uhoh... something went wrong, can you figure it out? :]&quot;)</span><br><span class="line">AssertionError: Uhoh... something went wrong, can you figure it out? :]</span><br><span class="line"></span><br><span class="line">(lldb) script pdb.pm()</span><br><span class="line">&gt; /Users/gogleyin/lldb/findclass.py(40)findclass()</span><br><span class="line">-&gt; raise AssertionError(&quot;Uhoh... something went wrong, can you figure it out? :]&quot;)</span><br><span class="line"></span><br><span class="line">(Pdb) print(codeString)  # 这个东西包含了一段oc代码，用oc runtime来找出runtime的所有类</span><br><span class="line">    @import Foundation;</span><br><span class="line">    int numClasses;</span><br><span class="line">    Class * classes = NULL;</span><br><span class="line">    classes = NULL;</span><br><span class="line">    numClasses = objc_getClassList(NULL, 0);</span><br><span class="line">    NSMutableString *returnString = [NSMutableString string];</span><br><span class="line">    classes = (__unsafe_unretained Class *)malloc(sizeof(Class) * numClasses);</span><br><span class="line">    numClasses = objc_getClassList(classes, numClasses);</span><br><span class="line">    for (int i = 0; i &lt; numClasses; i++) &#123;</span><br><span class="line">      Class c = classes[i];</span><br><span class="line">      [returnString appendFormat:@&quot;%s,&quot;, class_getName(c)];</span><br><span class="line">    &#125;</span><br><span class="line">    free(classes);</span><br><span class="line">    returnString;  # 返回returnString的值给Python脚本</span><br><span class="line"></span><br><span class="line">(Pdb) l 35, 45  # 会列出35到45行代码，注意40行的 -&gt; 表示当前pdb停在的位置</span><br><span class="line"> 35         &apos;&apos;&apos;</span><br><span class="line"> 36</span><br><span class="line"> 37         res = lldb.SBCommandReturnObject()</span><br><span class="line"> 38         debugger.GetCommandInterpreter().HandleCommand(&quot;expression -lobjc -O -- &quot; + codeString, res)</span><br><span class="line"> 39         if res.GetError():</span><br><span class="line"> 40  -&gt;         raise AssertionError(&quot;Uhoh... something went wrong, can you figure it out? :]&quot;)</span><br><span class="line"> 41         elif not res.HasResult():</span><br><span class="line"> 42             raise AssertionError(&quot;There&apos;s no result. Womp womp....&quot;)</span><br><span class="line"> 43</span><br><span class="line"> 44         returnVal = res.GetOutput()</span><br><span class="line"> 45         resultArray = returnVal.split(&quot;,&quot;)</span><br><span class="line"># 嗯，似乎res.GetError()看起来更加有趣，玩一下先</span><br><span class="line"></span><br><span class="line">(Pdb) print res.GetError()</span><br><span class="line">error: &apos;objc_getClassList&apos; has unknown return type; cast the call to its declared return type</span><br><span class="line">error: &apos;objc_getClassList&apos; has unknown return type; cast the call to its declared return type</span><br><span class="line">error: &apos;class_getName&apos; has unknown return type; cast the call to its declared return type</span><br><span class="line"># 到这里可以看到，问题是codeString里面的代码让LLDB迷惑了。</span><br><span class="line"># 实际这种错误在LLDB里面是非常常见的。你需要告诉LLDB一个函数的返回类型，因为它无法知道那是啥。</span><br><span class="line"># 在这个case下， objc_getClassList 和 class_getName 都有未知的返回类型</span><br><span class="line"># Google一下便知这两个函数的签名如下：</span><br><span class="line"> int objc_getClassList(Class *buffer, int bufferCount);</span><br><span class="line">const char * class_getName(Class cls);</span><br><span class="line"># 所有我们需要做的事转换返回类型到正确的值就可以啦。如下：</span><br><span class="line"></span><br><span class="line">codeString = r&apos;&apos;&apos;</span><br><span class="line">@import Foundation;</span><br><span class="line">int numClasses;</span><br><span class="line">Class * classes = NULL;</span><br><span class="line">classes = NULL;</span><br><span class="line">numClasses = (int)objc_getClassList(NULL, 0);</span><br><span class="line">NSMutableString *returnString = [NSMutableString string];</span><br><span class="line">classes = (__unsafe_unretained Class *)malloc(sizeof(Class) *numClasses);</span><br><span class="line">numClasses = (int)objc_getClassList(classes, numClasses);</span><br><span class="line">for (int i = 0; i &lt; numClasses; i++) &#123;</span><br><span class="line">  Class c = classes[i];</span><br><span class="line">  [returnString appendFormat:@&quot;%s,&quot;, (char *)class_getName(c)];</span><br><span class="line">&#125;</span><br><span class="line">free(classes);</span><br><span class="line">returnString;</span><br><span class="line"></span><br><span class="line">--debug选项是定位JIT代码中的问题的非常好的手段,调试lldb 的好方法</span><br><span class="line">expression --debug -lobjc -O --</span><br><span class="line">可以选择使用frame variable命令打印变量</span><br></pre></td></tr></table></figure>
 <h3 id="如何将断点设置在动态库的入口"><a href="#如何将断点设置在动态库的入口" class="headerlink" title="如何将断点设置在动态库的入口"></a>如何将断点设置在动态库的入口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LLDB命令行进行调试时自 动中断在 _dyld_start 处，因为此时dyld已经加载，所以在dyld里面设置一个在所有库中加载并且在constructor 函数执行之前执行的断点，例如initializeMainExecutable</span><br><span class="line">settings set target.process.stop-on-sharedlibrary-events 1</span><br></pre></td></tr></table></figure>
@@ -348,304 +278,136 @@
 </ul>
 <h3 id="iOS-分析常见点"><a href="#iOS-分析常见点" class="headerlink" title="iOS 分析常见点"></a>iOS 分析常见点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">handleLongPressAtPoint函数就是用于处理长按事件的函数</span><br><span class="line">第一响应者实现 canPerformAction:withSender: 来确定当前哪些操 作是被允许的、哪些操作是不被允许的。</span><br></pre></td></tr></table></figure>
 <h2 id="macos"><a href="#macos" class="headerlink" title="macos"></a>macos</h2>
-      
-       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 pandashellcode@gmail.com </span>
     </div>
-</article>
-
-
-<p>
-    <a href="javascript:void(0)" class="dashang" onclick="dashangToggle()">赏</a>
-</p>
-
-
-<div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>lldb-help</p>
-    
-    <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="pandamac">pandamac</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-02-23, 13:29:19</p>
-    <p><span class="copy-title">最后更新:</span>2020-02-23, 13:39:52</p>
-    <span class="copy-title">原始链接:</span>
-
-    <a class="post-url" href="/2020/02/23/lldb-help/" title="lldb-help">
-
-    http://pandamac.github.io/2020/02/23/lldb-help/
-
-    </a>
-    <p>
-        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"pancmac-共享 4.0"</a> 转载请保留原文链接及作者。
-    </p>
-</div>
-
-
-
-
 
     
+    
+    
+
+      <footer class="post-footer">
+
+        
 
 
-
-
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/22/%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BAdocset/" rel="prev" title="如何创建docset">
+      <i class="fa fa-chevron-left"></i> 如何创建docset
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-    <div class="copyright">
-        <p class="footer-entry">©2016-2019 pandamac</p>
-<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+      </footer>
+    
+  </article>
+  
+  
+  
 
-    </div>
-    <div class="full-toc">
-        <button class="full"><span class="min "></span></button>
-<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
-<div class="post-toc"><span class="post-toc-title">目录</span>
-    <div class="post-toc-content">
-
-    </div>
-</div>
-<a class="" id="rocket" href="javascript:void(0)"></a>
-    </div>
-</div>
-<div class="acParent"></div>
-
-<div class="hide_box" onclick="dashangToggle()"></div>
-<div class="shang_box">
-    <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
-    <div class="shang_tit">
-        <p>喜欢就点赞,疼爱就打赏</p>
-    </div>
-    <div class="shang_payimg">
-        <div class="pay_img">
-            <img src="/img/alipay.jpg" class="alipay" title="扫码支持">
-            <img src="/img/weixin.jpg" class="weixin" title="扫码支持">
-        </div>
-    </div>
-    <div class="shang_payselect">
-        <span><label><input type="radio" name="pay" checked value="alipay">支付宝</label></span><span><label><input type="radio" name="pay" value="weixin">微信</label></span>
-    </div>
-</div>
+  </div>
 
 
-</body>
-<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
+          </div>
+          
 
-<script src="/js/script.js?v=1.0.1" ></script>
 <script>
-    var img_resize = 'default';
-    /*作者、标签的自动补全*/
-    $(function () {
-        $('.search').AutoComplete({
-            'data': [],
-            'itemHeight': 20,
-            'width': 418
-        }).AutoComplete('show');
-    })
-    function initArticle() {
-        /*渲染对应的表格样式*/
-        
-            $(".post .pjax table").addClass("green_title");
-        
-
-        /*渲染打赏样式*/
-        
-        $("input[name=pay]").on("click", function () {
-            if($("input[name=pay]:checked").val()=="weixin"){
-                $(".shang_box .shang_payimg .pay_img").addClass("weixin_img");
-            } else {
-                $(".shang_box .shang_payimg .pay_img").removeClass("weixin_img");
-            }
-        })
-        
-
-        /*高亮代码块行号*/
-        
-        $('pre code').each(function(){
-            var lines = $(this).text().split('\n').length - 1, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
-
-        /*访问数量*/
-        
-        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
-        
-
-        /*代码高亮，行号对齐*/
-        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
-
-        
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
     }
-
-    /*打赏页面隐藏与展示*/
-    
-    function dashangToggle() {
-        $(".shang_box").fadeToggle();
-        $(".hide_box").fadeToggle();
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
     }
-    
-
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
 </script>
 
-<!--加入行号的高亮代码块样式-->
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
 
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 0.5em 3px 0.7em 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: #fafafa;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
+  <aside class="sidebar">
+    <div class="sidebar-inner">
 
-<!--自定义样式设置-->
-<style>
-    
-    
-    .nav {
-        width: 542px;
-    }
-    .nav.fullscreen {
-        margin-left: -542px;
-    }
-    .nav-left {
-        width: 120px;
-    }
-    
-    
-    @media screen and (max-width: 1468px) {
-        .nav {
-            width: 492px;
-        }
-        .nav.fullscreen {
-            margin-left: -492px;
-        }
-        .nav-left {
-            width: 100px;
-        }
-    }
-    
-    
-    @media screen and (max-width: 1024px) {
-        .nav {
-            width: 492px;
-            margin-left: -492px
-        }
-        .nav.fullscreen {
-            margin-left: 0;
-        }
-        .nav .hide-list.fullscreen {
-            left: 492px
-        }
-    }
-    
-    @media screen and (max-width: 426px) {
-        .nav {
-            width: 100%;
-        }
-        .nav-left {
-            width: 100%;
-        }
-    }
-    
-    
-    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
-        color: #383636;
-    }
-    
-    
-    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
-        color: #5e5e5f;
-    }
-    
-    
-    .nav-right nav a.hover, #local-search-result a.hover{
-        background-color: #e2e0e0;
-    }
-    
-    
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
 
-    /*列表样式*/
-    
-    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
-        border: #e2dede solid 1px;
-        border-radius: 10px;
-        padding: 10px 32px 10px 56px;
-    }
-    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
-        margin-bottom: auto;
-        margin-left: auto;
-    }
-    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
-        margin-bottom: auto;
-        margin-left: auto;
-    }
-    
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#some-lldb-tips"><span class="nav-number">1.</span> <span class="nav-text">some lldb tips</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通用"><span class="nav-number">1.1.</span> <span class="nav-text">通用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算偏移-ida地址"><span class="nav-number">1.1.1.</span> <span class="nav-text">计算偏移/ida地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#观察断点"><span class="nav-number">1.1.2.</span> <span class="nav-text">观察断点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读取目标地址的内存指令"><span class="nav-number">1.1.3.</span> <span class="nav-text">读取目标地址的内存指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dis-a-pc-反汇编指定地址"><span class="nav-number">1.1.4.</span> <span class="nav-text">dis-a$pc 反汇编指定地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#切换分支"><span class="nav-number">1.1.5.</span> <span class="nav-text">切换分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threadinfo-输出当前线程的信息。"><span class="nav-number">1.1.6.</span> <span class="nav-text">threadinfo:输出当前线程的信息。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-ptrace-c-xxx-满足某个条件之后程序才会中断。"><span class="nav-number">1.1.7.</span> <span class="nav-text">b ptrace -c xxx:满足某个条件之后程序才会中断。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#help-apropos"><span class="nav-number">1.1.8.</span> <span class="nav-text">help/apropos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#断点后执行命令"><span class="nav-number">1.1.9.</span> <span class="nav-text">断点后执行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xcode预处理快捷键"><span class="nav-number">1.1.10.</span> <span class="nav-text">xcode预处理快捷键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pdb来排查了一个脚本中的问题"><span class="nav-number">1.1.11.</span> <span class="nav-text">pdb来排查了一个脚本中的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何将断点设置在动态库的入口"><span class="nav-number">1.1.12.</span> <span class="nav-text">如何将断点设置在动态库的入口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本的类："><span class="nav-number">1.1.13.</span> <span class="nav-text">基本的类：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#android"><span class="nav-number">1.2.</span> <span class="nav-text">android</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS"><span class="nav-number">1.3.</span> <span class="nav-text">iOS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#砸壳"><span class="nav-number">1.3.1.</span> <span class="nav-text">砸壳</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询按钮事件"><span class="nav-number">1.3.2.</span> <span class="nav-text">查询按钮事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chisel-打印结构"><span class="nav-number">1.3.3.</span> <span class="nav-text">chisel 打印结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搜索UITextField的实例对象和Cycript中的choose—样的"><span class="nav-number">1.3.4.</span> <span class="nav-text">搜索UITextField的实例对象和Cycript中的choose—样的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看对象内存关系-xcode观看"><span class="nav-number">1.3.5.</span> <span class="nav-text">查看对象内存关系,xcode观看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行script"><span class="nav-number">1.3.6.</span> <span class="nav-text">执行script</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在-Snapchat模块中查看与login有关的符号信息"><span class="nav-number">1.3.7.</span> <span class="nav-text">在 Snapchat模块中查看与login有关的符号信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#某个类的所有方法下断点并跟踪打印调用参数"><span class="nav-number">1.3.8.</span> <span class="nav-text">某个类的所有方法下断点并跟踪打印调用参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xcode-设置环境变量"><span class="nav-number">1.3.9.</span> <span class="nav-text">xcode 设置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS-分析常见点"><span class="nav-number">1.3.10.</span> <span class="nav-text">iOS 分析常见点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#macos"><span class="nav-number">1.4.</span> <span class="nav-text">macos</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
 
-    /* 背景图样式 */
-    
-    
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">pandamac</p>
+  <div class="site-description" itemprop="description">pandamac's github pages</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
 
 
-    /*引用块样式*/
-    
 
-    /*文章列表背景图*/
-    
-    .nav-right:before {
-        content: ' ';
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.3;
-        background: url("https://i.loli.net/2019/07/22/5d3521411f3f169375.png");
-        background-repeat: no-repeat;
-        background-position: 50% 0;
-        -ms-background-size: cover;
-        -o-background-size: cover;
-        -moz-background-size: cover;
-        -webkit-background-size: cover;
-        background-size: cover;
-    }
-    
+      </div>
 
-    
-</style>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">pandamac</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
+  </div>
+
+        
 
 
 
@@ -653,4 +415,106 @@
 
 
 
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      script.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script><script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+    </div>
+</body>
 </html>
