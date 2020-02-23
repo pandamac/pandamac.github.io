@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"pandamac.github.io","root":"/","scheme":"Muse","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"pandamac.github.io","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"F8APJ8E550","apiKey":"d050e8704a1173bb5f72414e4300eed1","indexName":"pandamac","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="some lldb tips 通用 计算偏移&#x2F;ida地址 观察断点 读取目标地址的内存指令 dis-a$pc 反汇编指定地址 切换分支 threadinfo:输出当前线程的信息。 b ptrace -c xxx:满足某个条件之后程序才会中断。 help&#x2F;apropos 断点后执行命令 xcode预处理快捷键 pdb来排查了一个脚本中的问题 如何将断点设置在动态库的入口 基本的类：   andro">
@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;02&#x2F;23&#x2F;lldb_about&#x2F;lldb-help&#x2F;pic&#x2F;1.jpg">
 <meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;02&#x2F;23&#x2F;lldb_about&#x2F;lldb-help&#x2F;pic&#x2F;2.jpg">
-<meta property="og:updated_time" content="2020-02-23T11:27:03.451Z">
+<meta property="og:updated_time" content="2020-02-23T12:21:32.800Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;02&#x2F;23&#x2F;lldb_about&#x2F;lldb-help&#x2F;pic&#x2F;1.jpg">
 
@@ -210,10 +210,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-02-23 17:39:08 / 修改时间：19:27:03" itemprop="dateCreated datePublished" datetime="2020-02-23T17:39:08+08:00">2020-02-23</time>
+              <time title="创建时间：2020-02-23-17:39 17:39:08" itemprop="dateCreated datePublished" datetime="2020-02-23T17:39:08+08:00">2020-02-23-17:39</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-23-20:21 20:21:32" itemprop="dateModified" datetime="2020-02-23T20:21:32+08:00">2020-02-23-20:21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -227,6 +233,13 @@
             </span>
 
           
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
 
         </div>
       </header>
@@ -273,6 +286,7 @@
 </ul>
 </li>
 </ul>
+<a id="more"></a>
 <h1 id="some-lldb-tips"><a href="#some-lldb-tips" class="headerlink" title="some lldb tips"></a>some lldb tips</h1><h2 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h2><h3 id="计算偏移-ida地址"><a href="#计算偏移-ida地址" class="headerlink" title="计算偏移/ida地址"></a>计算偏移/ida地址</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p/x 0X000000010095ECCC+0X0000000000038000</span><br><span class="line">(lldb) p/x 0x0000000100e595b4-0x0000000000038000 (long) $18 = 0x0000000100e215b4</span><br><span class="line">查看某个地址所在模块的信息</span><br></pre></td></tr></table></figure>
 <h3 id="观察断点"><a href="#观察断点" class="headerlink" title="观察断点"></a>观察断点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watchpoint set expression -w write ―- 0xl01801a48 :给某个地址设置观察断点,内存进行写操作时就会触发断点</span><br></pre></td></tr></table></figure>
 <h3 id="读取目标地址的内存指令"><a href="#读取目标地址的内存指令" class="headerlink" title="读取目标地址的内存指令"></a>读取目标地址的内存指令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x/10xg 0xl01801a48 这里的x 表示用十六进制来显示结果。&quot;g&quot;代表giant word(8字节)大小。所以就是用十六进制显示 0x101801a48所指恐惧的10个64位的元素内容。常见的大小格式为&quot;b-byte&quot;(1字节),&quot;h-half word&quot;(2字节),&quot;w- word”(4字节),&quot;g-giantword”(8字节)。</span><br></pre></td></tr></table></figure>
@@ -410,11 +424,21 @@
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
         <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">标签</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pandamac/pandamac.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pandamac&#x2F;pandamac.github.io" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:pandashellcode@163.com" title="E-Mail → mailto:pandashellcode@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -434,20 +458,35 @@
 
 <div class="copyright">
   
-  &copy; 
+  &copy; Sun Feb 23 2020 08:00:00 GMT+0800 (China Standard Time) – 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">pandamac</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.1
-  </div>
 
         
+<div class="busuanzi-count">
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
@@ -466,7 +505,7 @@
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
-<script src="/js/schemes/muse.js"></script>
+<script src="/js/schemes/pisces.js"></script>
 <script src="/js/next-boot.js"></script>
   <script>
 var pjax = new Pjax({
