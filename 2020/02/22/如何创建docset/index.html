@@ -6,17 +6,17 @@
   <meta name="keywords" content="">
   <meta name="description" content="如何创建docset | pandamac&#39;s github pages">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="通用 1.计算偏移&#x2F;ida地址 3.读取目标地址的内存指令 4.dis-a$pc 反汇编指定地址 5.f2:切换到当前调用栈为2的位置，也就是bt中的frame #2。 6.threadinfo:输出当前线程的信息。 7.b ptrace -c xxx:满足某个条件之后程序才会中断。 8.help&#x2F;apropos 9.断点后执行命令 10. xcode预处理快捷键 11.pdb来排查了一个脚本中">
+<meta name="description" content="some lldb tips 通用 计算偏移&#x2F;ida地址 观察断点 读取目标地址的内存指令 dis-a$pc 反汇编指定地址 f2:切换到当前调用栈为2的位置，也就是bt中的frame #2。 threadinfo:输出当前线程的信息。 b ptrace -c xxx:满足某个条件之后程序才会中断。 help&#x2F;apropos 断点后执行命令 xcode预处理快捷键 pdb来排查了一个脚本中的问题">
 <meta name="keywords" content="study">
 <meta property="og:type" content="article">
 <meta property="og:title" content="lldb-help">
 <meta property="og:url" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;02&#x2F;23&#x2F;lldb-help&#x2F;index.html">
 <meta property="og:site_name" content="pandamac&#39;s github pages">
-<meta property="og:description" content="通用 1.计算偏移&#x2F;ida地址 3.读取目标地址的内存指令 4.dis-a$pc 反汇编指定地址 5.f2:切换到当前调用栈为2的位置，也就是bt中的frame #2。 6.threadinfo:输出当前线程的信息。 7.b ptrace -c xxx:满足某个条件之后程序才会中断。 8.help&#x2F;apropos 9.断点后执行命令 10. xcode预处理快捷键 11.pdb来排查了一个脚本中">
+<meta property="og:description" content="some lldb tips 通用 计算偏移&#x2F;ida地址 观察断点 读取目标地址的内存指令 dis-a$pc 反汇编指定地址 f2:切换到当前调用栈为2的位置，也就是bt中的frame #2。 threadinfo:输出当前线程的信息。 b ptrace -c xxx:满足某个条件之后程序才会中断。 help&#x2F;apropos 断点后执行命令 xcode预处理快捷键 pdb来排查了一个脚本中的问题">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;02&#x2F;23&#x2F;lldb-help&#x2F;pic&#x2F;1.jpg">
 <meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;02&#x2F;23&#x2F;lldb-help&#x2F;pic&#x2F;2.jpg">
-<meta property="og:updated_time" content="2020-02-23T05:31:33.563Z">
+<meta property="og:updated_time" content="2020-02-23T05:39:52.531Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;02&#x2F;23&#x2F;lldb-help&#x2F;pic&#x2F;1.jpg">
 
