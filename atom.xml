@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://pandamac.github.io/"/>
-  <updated>2020-03-13T11:22:41.276Z</updated>
+  <updated>2020-03-13T11:29:22.834Z</updated>
   <id>http://pandamac.github.io/</id>
   
   <author>
@@ -21,22 +21,14 @@
     <link href="http://pandamac.github.io/2020/03/13/frida_about/frida-trace-burp/"/>
     <id>http://pandamac.github.io/2020/03/13/frida_about/frida-trace-burp/</id>
     <published>2020-03-13T09:18:48.000Z</published>
-    <updated>2020-03-13T11:22:41.276Z</updated>
+    <updated>2020-03-13T11:29:22.834Z</updated>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;frida-trace扩展信息到burp&quot;&gt;&lt;a href=&quot;#frida-trace扩展信息到burp&quot; class=&quot;headerlink&quot; title=&quot;frida-trace扩展信息到burp&quot;&gt;&lt;/a&gt;frida-trace扩展信息到burp&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h2 id=&quot;1-简介&quot;&gt;&lt;a href=&quot;#1-简介&quot; class=&quot;headerlink&quot; title=&quot;1. 简介&quot;&gt;&lt;/a&gt;1. 简介&lt;/h2&gt;&lt;p&gt;参考原文&lt;a href=&quot;https://cedricvb.be/post/tracing-api-calls-in-burp-with-frida/#prettyPhoto&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Tracing API calls in Burp with Frida&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;利用frida实现一个与burp结合实时修改二进制函数参数返回值插件。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;可以burp查看frida hook的值，burp有很多非常人性化的界面可以参考。&lt;/li&gt;
-&lt;li&gt;可以burp修改hook的参数，注入测试&lt;ol&gt;
-&lt;li&gt;NSString*&lt;/li&gt;
-&lt;li&gt;NSData*&lt;/li&gt;
-&lt;li&gt;byte * or char*&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
+      
+      
+        &lt;h1 id=&quot;frida-trace扩展信息到burp&quot;&gt;&lt;a href=&quot;#frida-trace扩展信息到burp&quot; class=&quot;headerlink&quot; title=&quot;frida-trace扩展信息到burp&quot;&gt;&lt;/a&gt;frida-trace扩展信息到burp&lt;/h1&gt;&lt;
+      
     
     </summary>
     
