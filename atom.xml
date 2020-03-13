@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://pandamac.github.io/"/>
-  <updated>2020-03-13T11:18:56.823Z</updated>
+  <updated>2020-03-13T11:22:41.276Z</updated>
   <id>http://pandamac.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://pandamac.github.io/2020/03/13/frida_about/frida-trace-burp/"/>
     <id>http://pandamac.github.io/2020/03/13/frida_about/frida-trace-burp/</id>
     <published>2020-03-13T09:18:48.000Z</published>
-    <updated>2020-03-13T11:18:56.823Z</updated>
+    <updated>2020-03-13T11:22:41.276Z</updated>
     
     <summary type="html">
     
@@ -41,7 +41,9 @@
     </summary>
     
     
-      <category term="frida" scheme="http://pandamac.github.io/categories/frida/"/>
+      <category term="tools" scheme="http://pandamac.github.io/categories/tools/"/>
+    
+      <category term="frida" scheme="http://pandamac.github.io/categories/tools/frida/"/>
     
     
       <category term="frida" scheme="http://pandamac.github.io/tags/frida/"/>
@@ -55,7 +57,7 @@
     <link href="http://pandamac.github.io/2020/02/23/lldb_about/lldb-help/"/>
     <id>http://pandamac.github.io/2020/02/23/lldb_about/lldb-help/</id>
     <published>2020-02-23T09:39:08.000Z</published>
-    <updated>2020-03-04T15:54:13.928Z</updated>
+    <updated>2020-03-13T11:23:00.775Z</updated>
     
     <summary type="html">
     
@@ -144,7 +146,9 @@
     </summary>
     
     
-      <category term="lldb" scheme="http://pandamac.github.io/categories/lldb/"/>
+      <category term="tools" scheme="http://pandamac.github.io/categories/tools/"/>
+    
+      <category term="lldb" scheme="http://pandamac.github.io/categories/tools/lldb/"/>
     
     
       <category term="lldb" scheme="http://pandamac.github.io/tags/lldb/"/>
