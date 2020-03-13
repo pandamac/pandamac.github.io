@@ -5,7 +5,7 @@
     <url>/2020/03/13/frida_about/frida-trace%E6%89%A9%E5%B1%95burp/</url>
     <content><![CDATA[<h1 id="frida-trace扩展信息到burp"><a href="#frida-trace扩展信息到burp" class="headerlink" title="frida-trace扩展信息到burp"></a>frida-trace扩展信息到burp</h1><p>[TOC]</p>
 <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><p>参考原文<a href="https://cedricvb.be/post/tracing-api-calls-in-burp-with-frida/#prettyPhoto" target="_blank" rel="noopener">Tracing API calls in Burp with Frida</a></p>
-<p>在加密发生之前，我使用Frida来拦截和转储纯文本请求/响应。我想修改拦截的API调用，并查看远程服务器如何响应，但这需要我每次修改Frida脚本。</p>
+<p>利用frida实现一个与burp结合实时修改二进制函数参数返回值插件。</p>
 <ol>
 <li>可以burp查看frida hook的值，burp有很多非常人性化的界面可以参考。</li>
 <li>可以burp修改hook的参数，注入测试<ol>

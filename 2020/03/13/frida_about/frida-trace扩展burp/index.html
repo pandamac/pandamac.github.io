@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"pandamac.github.io","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"F8APJ8E550","apiKey":"d050e8704a1173bb5f72414e4300eed1","indexName":"pandamac","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="frida-trace扩展信息到burp[TOC] 1. 简介参考原文Tracing API calls in Burp with Frida 在加密发生之前，我使用Frida来拦截和转储纯文本请求&#x2F;响应。我想修改拦截的API调用，并查看远程服务器如何响应，但这需要我每次修改Frida脚本。  可以burp查看frida hook的值，burp有很多非常人性化的界面可以参考。 可以burp修改ho">
+  <meta name="description" content="frida-trace扩展信息到burp[TOC] 1. 简介参考原文Tracing API calls in Burp with Frida 利用frida实现一个与burp结合实时修改二进制函数参数返回值插件。  可以burp查看frida hook的值，burp有很多非常人性化的界面可以参考。 可以burp修改hook的参数，注入测试 NSString* NSData* byte * or">
 <meta name="keywords" content="frida,burp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="frida-trace扩展信息到burp">
 <meta property="og:url" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;03&#x2F;13&#x2F;frida_about&#x2F;frida-trace%E6%89%A9%E5%B1%95burp&#x2F;index.html">
 <meta property="og:site_name" content="pandamac&#39;s Note">
-<meta property="og:description" content="frida-trace扩展信息到burp[TOC] 1. 简介参考原文Tracing API calls in Burp with Frida 在加密发生之前，我使用Frida来拦截和转储纯文本请求&#x2F;响应。我想修改拦截的API调用，并查看远程服务器如何响应，但这需要我每次修改Frida脚本。  可以burp查看frida hook的值，burp有很多非常人性化的界面可以参考。 可以burp修改ho">
+<meta property="og:description" content="frida-trace扩展信息到burp[TOC] 1. 简介参考原文Tracing API calls in Burp with Frida 利用frida实现一个与burp结合实时修改二进制函数参数返回值插件。  可以burp查看frida hook的值，burp有很多非常人性化的界面可以参考。 可以burp修改hook的参数，注入测试 NSString* NSData* byte * or">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;03&#x2F;13&#x2F;frida_about&#x2F;frida-trace%E6%89%A9%E5%B1%95burp&#x2F;pic&#x2F;15840937180100.jpg">
 <meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;03&#x2F;13&#x2F;frida_about&#x2F;frida-trace%E6%89%A9%E5%B1%95burp&#x2F;pic&#x2F;15840937335351.jpg">
 <meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;03&#x2F;13&#x2F;frida_about&#x2F;frida-trace%E6%89%A9%E5%B1%95burp&#x2F;pic&#x2F;15840937410774.jpg">
-<meta property="og:updated_time" content="2020-03-13T10:41:53.228Z">
+<meta property="og:updated_time" content="2020-03-13T10:48:13.690Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;03&#x2F;13&#x2F;frida_about&#x2F;frida-trace%E6%89%A9%E5%B1%95burp&#x2F;pic&#x2F;15840937180100.jpg">
 
@@ -224,7 +224,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-13-18:41 18:41:53" itemprop="dateModified" datetime="2020-03-13T18:41:53+08:00">2020-03-13-18:41</time>
+                <time title="修改时间：2020-03-13-18:48 18:48:13" itemprop="dateModified" datetime="2020-03-13T18:48:13+08:00">2020-03-13-18:48</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -272,7 +272,7 @@
       
         <h1 id="frida-trace扩展信息到burp"><a href="#frida-trace扩展信息到burp" class="headerlink" title="frida-trace扩展信息到burp"></a>frida-trace扩展信息到burp</h1><p>[TOC]</p>
 <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><p>参考原文<a href="https://cedricvb.be/post/tracing-api-calls-in-burp-with-frida/#prettyPhoto" target="_blank" rel="noopener">Tracing API calls in Burp with Frida</a></p>
-<p>在加密发生之前，我使用Frida来拦截和转储纯文本请求/响应。我想修改拦截的API调用，并查看远程服务器如何响应，但这需要我每次修改Frida脚本。</p>
+<p>利用frida实现一个与burp结合实时修改二进制函数参数返回值插件。</p>
 <ol>
 <li>可以burp查看frida hook的值，burp有很多非常人性化的界面可以参考。</li>
 <li>可以burp修改hook的参数，注入测试<ol>
@@ -459,7 +459,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">27 分钟</span>
+    <span title="站点阅读时长">26 分钟</span>
 </div>
 
         
