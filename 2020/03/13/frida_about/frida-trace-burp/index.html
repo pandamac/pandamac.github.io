@@ -24,18 +24,18 @@
 <meta name="keywords" content="frida,burp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="frida-trace扩展信息到burp">
-<meta property="og:url" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;03&#x2F;13&#x2F;frida_about&#x2F;frida-trace%E6%89%A9%E5%B1%95burp&#x2F;index.html">
+<meta property="og:url" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;03&#x2F;13&#x2F;frida_about&#x2F;frida-trace-burp&#x2F;index.html">
 <meta property="og:site_name" content="pandamac&#39;s Note">
 <meta property="og:description" content="frida-trace扩展信息到burp[TOC] 1. 简介参考原文Tracing API calls in Burp with Frida 利用frida实现一个与burp结合实时修改二进制函数参数返回值插件。  可以burp查看frida hook的值，burp有很多非常人性化的界面可以参考。 可以burp修改hook的参数，注入测试 NSString* NSData* byte * or">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;03&#x2F;13&#x2F;frida_about&#x2F;frida-trace%E6%89%A9%E5%B1%95burp&#x2F;pic&#x2F;15840937180100.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;03&#x2F;13&#x2F;frida_about&#x2F;frida-trace%E6%89%A9%E5%B1%95burp&#x2F;pic&#x2F;15840937335351.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;03&#x2F;13&#x2F;frida_about&#x2F;frida-trace%E6%89%A9%E5%B1%95burp&#x2F;pic&#x2F;15840937410774.jpg">
-<meta property="og:updated_time" content="2020-03-13T10:48:13.690Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;03&#x2F;13&#x2F;frida_about&#x2F;frida-trace-burp&#x2F;pic&#x2F;15840937180100.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;03&#x2F;13&#x2F;frida_about&#x2F;frida-trace-burp&#x2F;pic&#x2F;15840937335351.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;03&#x2F;13&#x2F;frida_about&#x2F;frida-trace-burp&#x2F;pic&#x2F;15840937410774.jpg">
+<meta property="og:updated_time" content="2020-03-13T11:12:21.837Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;03&#x2F;13&#x2F;frida_about&#x2F;frida-trace%E6%89%A9%E5%B1%95burp&#x2F;pic&#x2F;15840937180100.jpg">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;03&#x2F;13&#x2F;frida_about&#x2F;frida-trace-burp&#x2F;pic&#x2F;15840937180100.jpg">
 
-<link rel="canonical" href="http://pandamac.github.io/2020/03/13/frida_about/frida-trace%E6%89%A9%E5%B1%95burp/">
+<link rel="canonical" href="http://pandamac.github.io/2020/03/13/frida_about/frida-trace-burp/">
 
 
 <script id="page-configurations">
@@ -194,7 +194,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://pandamac.github.io/2020/03/13/frida_about/frida-trace%E6%89%A9%E5%B1%95burp/">
+    <link itemprop="mainEntityOfPage" href="http://pandamac.github.io/2020/03/13/frida_about/frida-trace-burp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -224,7 +224,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-13-18:48 18:48:13" itemprop="dateModified" datetime="2020-03-13T18:48:13+08:00">2020-03-13-18:48</time>
+                <time title="修改时间：2020-03-13-19:12 19:12:21" itemprop="dateModified" datetime="2020-03-13T19:12:21+08:00">2020-03-13-19:12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
