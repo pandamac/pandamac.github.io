@@ -11,7 +11,9 @@
 <li>可以burp修改hook的参数，注入测试<ol>
 <li>NSString*</li>
 <li>NSData*</li>
-<li>byte * or char*</li>
+<li>byte * or char*<a id="more"></a>
+
+</li>
 </ol>
 </li>
 </ol>
