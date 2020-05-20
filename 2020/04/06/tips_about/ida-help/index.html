@@ -32,7 +32,7 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;04&#x2F;06&#x2F;tips_about&#x2F;ida-help&#x2F;media&#x2F;15865894821928.jpg">
 <meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;04&#x2F;06&#x2F;tips_about&#x2F;ida-help&#x2F;media&#x2F;15865896765840.jpg">
 <meta property="og:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;04&#x2F;06&#x2F;tips_about&#x2F;ida-help&#x2F;media&#x2F;15865887458893.jpg">
-<meta property="og:updated_time" content="2020-04-11T08:10:24.436Z">
+<meta property="og:updated_time" content="2020-04-15T02:39:17.223Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;pandamac.github.io&#x2F;2020&#x2F;04&#x2F;06&#x2F;tips_about&#x2F;ida-help&#x2F;media&#x2F;15865894340527.jpg">
 
@@ -225,7 +225,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-11-16:10 16:10:24" itemprop="dateModified" datetime="2020-04-11T16:10:24+08:00">2020-04-11-16:10</time>
+                <time title="修改时间：2020-04-15-10:39 10:39:17" itemprop="dateModified" datetime="2020-04-15T10:39:17+08:00">2020-04-15-10:39</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -264,14 +264,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.1k</span>
+              <span>6.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -294,9 +294,21 @@
 <p>指定judg函数的0-181范围的字节异或0xc</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">judge=0x600B00</span><br><span class="line">for i in range(182):</span><br><span class="line">    addr=0x600B00+i</span><br><span class="line">    byte=get_bytes(addr,1)#获取指定地址的指定字节数</span><br><span class="line">    byte=ord(byte)^0xC</span><br><span class="line">    patch_byte(addr,byte)#打patch修改字节</span><br></pre></td></tr></table></figure>
 <p>在菜单栏中file–&gt;script file，加载python脚本</p>
-<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><h3 id="Keypatch"><a href="#Keypatch" class="headerlink" title="Keypatch"></a>Keypatch</h3><h3 id="FRIEND"><a href="#FRIEND" class="headerlink" title="FRIEND"></a>FRIEND</h3><p>重新打开 IDA，点击Edit–&gt;Plugins就可以看到FRIEND插件了。<br>/Users/shellcodepanda/Documents/panda/ida_about//ida_plugin/FRIEND/Configurations/AArch64_armv8arm_k.xml<br>导入后，选择自己想要文档化的内容，并勾选下面三个勾，允许做处理器扩展、允许显示提示、允许显示函数概要。点击 OK。</p>
+<h2 id="IDA-详细插件"><a href="#IDA-详细插件" class="headerlink" title="IDA 详细插件"></a>IDA 详细插件</h2><p><a href="https://github.com/onethawt/idaplugins-list" target="_blank" rel="noopener">https://github.com/onethawt/idaplugins-list</a></p>
+<h3 id="Keypatch"><a href="#Keypatch" class="headerlink" title="Keypatch"></a>Keypatch</h3><h3 id="heap-viewer-方便查堆"><a href="#heap-viewer-方便查堆" class="headerlink" title="heap-viewer 方便查堆"></a>heap-viewer 方便查堆</h3><p><a href="https://github.com/danigargu/heap-viewer" target="_blank" rel="noopener">https://github.com/danigargu/heap-viewer</a></p>
+<h3 id="findcrypt-yara-查找加密"><a href="#findcrypt-yara-查找加密" class="headerlink" title="findcrypt-yara 查找加密"></a>findcrypt-yara 查找加密</h3><h3 id="FRIEND"><a href="#FRIEND" class="headerlink" title="FRIEND"></a>FRIEND</h3><p>Flexible Register/Instruction Extender aNd Documentation<br><a href="https://github.com/alexhude/FRIEND" target="_blank" rel="noopener">https://github.com/alexhude/FRIEND</a><br>重新打开 IDA，点击Edit–&gt;Plugins就可以看到FRIEND插件了。<br>/Users/shellcodepanda/Documents/panda/ida_about/ida_plugin/FRIEND/Configurations/AArch64_armv8arm_k.xml<br>导入后，选择自己想要文档化的内容，并勾选下面三个勾，允许做处理器扩展、允许显示提示、允许显示函数概要。点击 OK。</p>
 <h3 id="C-filt"><a href="#C-filt" class="headerlink" title="C++filt"></a>C++filt</h3><p>可以用于显示出c++中复杂的重载后的函数名称</p>
 <h3 id="strip"><a href="#strip" class="headerlink" title="strip"></a>strip</h3><p>可用于elf去符号，去符号后仍然保持正常功能但增加了逆向的难度，出题恶人必备</p>
+<h3 id="比较插件"><a href="#比较插件" class="headerlink" title="比较插件"></a>比较插件</h3><h4 id="ida-bindiff-补丁比较情况"><a href="#ida-bindiff-补丁比较情况" class="headerlink" title="ida bindiff  补丁比较情况"></a>ida bindiff  补丁比较情况</h4><p>BinDiff是二进制文件的比较工具，可帮助漏洞研究人员和工程师快速找到反汇编代码中的差异和相似之处。<br>使用BinDiff，您可以识别并隔离供应商提供的修补程序中的漏洞修复程序。您还可以在同一二进制文件的多个版本的反汇编之间移植符号和注释，或使用BinDiff收集代码被盗或专利侵权的证据。</p>
+<h4 id="IDA-对比-F5-显示差异-diaphora"><a href="#IDA-对比-F5-显示差异-diaphora" class="headerlink" title="IDA 对比 F5 显示差异 diaphora"></a>IDA 对比 F5 显示差异 diaphora</h4><p>Diaphora，最先进的免费开源二进制文件对比工具。<br>Diaphora是一个IDA插件，用来帮助二进制文件对比。他和其他的比较工具很类似，有一个著名的开源工具就叫做Zynamics BinDiff。还有其他的开源工具，比如DarunGrim或者是TurboDiff。但是从实际使用结果上来看，这些Diaphora能够进行更多的操作，并且能够更好地识别效果。它是在SyScan 2015期间发布的。<br>通过bindiff或者diaphora来对比不同是ida数据库，以获取函数的特征也是种很好的方法，这种方法在平时分析静态链接的程序也很有用。</p>
+<h4 id="签名比较"><a href="#签名比较" class="headerlink" title="签名比较"></a>签名比较</h4><p>idb2pat.py+sigmake制作签名<br>idb2pat.py是火眼公司FireEye Labs Advanced Reverse Engineering团队编写的脚本，代码在GitHub上开源，该脚本主要通过CRC16的方式来计算每个函数块的特性，从而来识别不同的函数。这点也和IDA官方对签名文件的说明相符合，参见IDA F.L.I.R.T. Technology: In-Depth。</p>
+<h4 id="Rizzo插件生成数据库识别"><a href="#Rizzo插件生成数据库识别" class="headerlink" title="Rizzo插件生成数据库识别"></a>Rizzo插件生成数据库识别</h4><p>关于rizzo，可以参看GitHub上的介绍Rizzo，同样也是一种对ida数据库进行保存然后提取信息进行对比的工具，收录于devttys0的ida脚本目录中。自己也进行了测试，速度还可以。<br>Create function signatures that can be shared amongst different projects. There are multiple sets of signatures that are generated:</p>
+<h4 id="脚本扩展Sark"><a href="#脚本扩展Sark" class="headerlink" title="脚本扩展Sark"></a>脚本扩展Sark</h4><p>Sark, (named after the notorious Tron villain,) is an object-oriented scripting layer written on top of IDAPython to provide ease of use, as well as additional tools for writing advanced scripts and plugins.</p>
+<p><a href="https://sark.readthedocs.io/en/latest/Installation.html" target="_blank" rel="noopener">https://sark.readthedocs.io/en/latest/Installation.html</a></p>
+<p>/usr/local/bin/pip.bak install -U git+<a href="https://github.com/tmr232/Sark.git@IDA-6.x#egg=Sarks" target="_blank" rel="noopener">https://github.com/tmr232/Sark.git@IDA-6.x#egg=Sarks</a></p>
+<h3 id="配色"><a href="#配色" class="headerlink" title="配色"></a>配色</h3><p><a href="https://blog.csdn.net/LPWSTR/article/details/78409727" target="_blank" rel="noopener">https://blog.csdn.net/LPWSTR/article/details/78409727</a><br><a href="https://github.com/zyantific/IDASkins" target="_blank" rel="noopener">https://github.com/zyantific/IDASkins</a><br>IDA的Edit菜单的Plugins子菜单中即可找到SkinPlugin选项，点击后在窗口中选择合适的主题<br><a href="https://github.com/0xItx/ida_nightfall" target="_blank" rel="noopener">https://github.com/0xItx/ida_nightfall</a>   汇编指令的颜色同一修改为了蓝色。</p>
+<h3 id="Data-Visualization-Plugin-for-IDA-Pro"><a href="#Data-Visualization-Plugin-for-IDA-Pro" class="headerlink" title="Data Visualization Plugin for IDA Pro"></a>Data Visualization Plugin for IDA Pro</h3><p><a href="https://github.com/patois/IDACyber" target="_blank" rel="noopener">https://github.com/patois/IDACyber</a></p>
+<h3 id="bap-ida-python"><a href="#bap-ida-python" class="headerlink" title="bap-ida-python"></a>bap-ida-python</h3><p>bap也不是很出名哇<br><a href="https://github.com/BinaryAnalysisPlatform/bap-ida-python" target="_blank" rel="noopener">https://github.com/BinaryAnalysisPlatform/bap-ida-python</a></p>
 <h3 id="win-tools"><a href="#win-tools" class="headerlink" title="win_tools"></a>win_tools</h3><h4 id="PE-tools："><a href="#PE-tools：" class="headerlink" title="PE tools："></a>PE tools：</h4><p>是一组用于分析Windows系统中正在运行的进程和可执行文件的工具</p>
 <h2 id="ida-watch"><a href="#ida-watch" class="headerlink" title="ida watch"></a>ida watch</h2><p>右键AddWatch或直接按Insert键，插入一个寄存器v0，注意大小写；<br>插入时我们需要指定变量的类型，如（String）v1，（char *）v2，（int）v3等形式类似于C++里的类型强转。这样我们才可以看到寄存器的值。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ida调试Dalvik显示局部变量</span><br><span class="line">(Object*)v2</span><br><span class="line">(String)v2</span><br><span class="line">(char*)v2</span><br><span class="line">(int)v2</span><br></pre></td></tr></table></figure>
@@ -352,7 +364,10 @@
     <a href="/2020/03/13/frida_about/frida-trace-burp/" rel="prev" title="frida-trace扩展信息到burp">
       <i class="fa fa-chevron-left"></i> frida-trace扩展信息到burp
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/20/linux-pwn%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E5%88%B0%E6%94%BE%E5%BC%83/" rel="next" title="linux pwn入门学习到放弃">
+      linux pwn入门学习到放弃 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -430,7 +445,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IDA-Pro使用技巧总结"><span class="nav-text">IDA_Pro使用技巧总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IDA常见命名意义"><span class="nav-text">IDA常见命名意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida-python"><span class="nav-text">ida python</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插件"><span class="nav-text">插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Keypatch"><span class="nav-text">Keypatch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FRIEND"><span class="nav-text">FRIEND</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-filt"><span class="nav-text">C++filt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strip"><span class="nav-text">strip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#win-tools"><span class="nav-text">win_tools</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PE-tools："><span class="nav-text">PE tools：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida-watch"><span class="nav-text">ida watch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较二进制"><span class="nav-text">比较二进制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida7-0-中文"><span class="nav-text">ida7.0 中文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDA反编译会出现问题IDA-sp-analysis-failed-不能F5"><span class="nav-text">IDA反编译会出现问题IDA sp-analysis failed 不能F5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDA显示-thumb"><span class="nav-text">IDA显示 thumb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDA-快捷键-配置"><span class="nav-text">IDA 快捷键_配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#64位参数会在函数中存在两个参数！-IDA中看到4个参数，改参数"><span class="nav-text">64位参数会在函数中存在两个参数！ IDA中看到4个参数，改参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDA-脚本-调用函数"><span class="nav-text">IDA 脚本 调用函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida静态分析"><span class="nav-text">ida静态分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#android"><span class="nav-text">android</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导入ida看符号"><span class="nav-text">导入ida看符号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS"><span class="nav-text">iOS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#macos"><span class="nav-text">macos</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-text">参考</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IDA-Pro使用技巧总结"><span class="nav-text">IDA_Pro使用技巧总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IDA常见命名意义"><span class="nav-text">IDA常见命名意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida-python"><span class="nav-text">ida python</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDA-详细插件"><span class="nav-text">IDA 详细插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Keypatch"><span class="nav-text">Keypatch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#heap-viewer-方便查堆"><span class="nav-text">heap-viewer 方便查堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#findcrypt-yara-查找加密"><span class="nav-text">findcrypt-yara 查找加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FRIEND"><span class="nav-text">FRIEND</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-filt"><span class="nav-text">C++filt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strip"><span class="nav-text">strip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#比较插件"><span class="nav-text">比较插件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ida-bindiff-补丁比较情况"><span class="nav-text">ida bindiff  补丁比较情况</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IDA-对比-F5-显示差异-diaphora"><span class="nav-text">IDA 对比 F5 显示差异 diaphora</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#签名比较"><span class="nav-text">签名比较</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Rizzo插件生成数据库识别"><span class="nav-text">Rizzo插件生成数据库识别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#脚本扩展Sark"><span class="nav-text">脚本扩展Sark</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配色"><span class="nav-text">配色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-Visualization-Plugin-for-IDA-Pro"><span class="nav-text">Data Visualization Plugin for IDA Pro</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bap-ida-python"><span class="nav-text">bap-ida-python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#win-tools"><span class="nav-text">win_tools</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PE-tools："><span class="nav-text">PE tools：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida-watch"><span class="nav-text">ida watch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较二进制"><span class="nav-text">比较二进制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida7-0-中文"><span class="nav-text">ida7.0 中文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDA反编译会出现问题IDA-sp-analysis-failed-不能F5"><span class="nav-text">IDA反编译会出现问题IDA sp-analysis failed 不能F5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDA显示-thumb"><span class="nav-text">IDA显示 thumb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDA-快捷键-配置"><span class="nav-text">IDA 快捷键_配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#64位参数会在函数中存在两个参数！-IDA中看到4个参数，改参数"><span class="nav-text">64位参数会在函数中存在两个参数！ IDA中看到4个参数，改参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDA-脚本-调用函数"><span class="nav-text">IDA 脚本 调用函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida静态分析"><span class="nav-text">ida静态分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#android"><span class="nav-text">android</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导入ida看符号"><span class="nav-text">导入ida看符号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS"><span class="nav-text">iOS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#macos"><span class="nav-text">macos</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-text">参考</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -444,7 +459,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -499,12 +514,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">35k</span>
+    <span title="站点总字数">62k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">32 分钟</span>
+    <span title="站点阅读时长">57 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
   </div>

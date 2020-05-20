@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://pandamac.github.io/"/>
-  <updated>2020-04-11T08:10:24.436Z</updated>
+  <updated>2020-05-20T07:37:20.652Z</updated>
   <id>http://pandamac.github.io/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>linux pwn入门学习到放弃</title>
+    <link href="http://pandamac.github.io/2020/05/20/linux-pwn%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E5%88%B0%E6%94%BE%E5%BC%83/"/>
+    <id>http://pandamac.github.io/2020/05/20/linux-pwn%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E5%88%B0%E6%94%BE%E5%BC%83/</id>
+    <published>2020-05-20T07:36:37.000Z</published>
+    <updated>2020-05-20T07:37:20.652Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;linux-pwn入门学习到放弃&quot;&gt;&lt;a href=&quot;#linux-pwn入门学习到放弃&quot; class=&quot;headerlink&quot; title=&quot;linux pwn入门学习到放弃&quot;&gt;&lt;/a&gt;linux pwn入门学习到放弃&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;p&gt;P
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>ida_help</title>
     <link href="http://pandamac.github.io/2020/04/06/tips_about/ida-help/"/>
     <id>http://pandamac.github.io/2020/04/06/tips_about/ida-help/</id>
     <published>2020-04-06T03:28:58.000Z</published>
-    <updated>2020-04-11T08:10:24.436Z</updated>
+    <updated>2020-04-15T02:39:17.223Z</updated>
     
     <summary type="html">
     
@@ -84,7 +105,7 @@
     <link href="http://pandamac.github.io/2020/02/23/tips_about/lldb-help/"/>
     <id>http://pandamac.github.io/2020/02/23/tips_about/lldb-help/</id>
     <published>2020-02-23T09:39:08.000Z</published>
-    <updated>2020-04-09T08:04:00.484Z</updated>
+    <updated>2020-04-15T02:43:39.290Z</updated>
     
     <summary type="html">
     
