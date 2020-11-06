@@ -90,11 +90,11 @@
       <category term="tips" scheme="http://pandamac.github.io/categories/tools/ida/tips/"/>
     
     
+      <category term="ida" scheme="http://pandamac.github.io/tags/ida/"/>
+    
       <category term="脚本" scheme="http://pandamac.github.io/tags/script/"/>
     
       <category term="tips" scheme="http://pandamac.github.io/tags/tips/"/>
-    
-      <category term="ida" scheme="http://pandamac.github.io/tags/ida/"/>
     
   </entry>
   
@@ -152,11 +152,11 @@
       <category term="tips" scheme="http://pandamac.github.io/categories/tools/lldb/tips/"/>
     
     
-      <category term="lldb" scheme="http://pandamac.github.io/tags/lldb/"/>
-    
       <category term="脚本" scheme="http://pandamac.github.io/tags/script/"/>
     
       <category term="tips" scheme="http://pandamac.github.io/tags/tips/"/>
+    
+      <category term="lldb" scheme="http://pandamac.github.io/tags/lldb/"/>
     
   </entry>
   
