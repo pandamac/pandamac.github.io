@@ -348,9 +348,9 @@
         <category>tips</category>
       </categories>
       <tags>
-        <tag>ida</tag>
         <tag>脚本</tag>
         <tag>tips</tag>
+        <tag>ida</tag>
       </tags>
   </entry>
   <entry>
@@ -481,9 +481,9 @@
         <category>tips</category>
       </categories>
       <tags>
+        <tag>lldb</tag>
         <tag>脚本</tag>
         <tag>tips</tag>
-        <tag>lldb</tag>
       </tags>
   </entry>
   <entry>
