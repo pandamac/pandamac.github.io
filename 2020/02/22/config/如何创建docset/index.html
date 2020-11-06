@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"pandamac.github.io","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"F8APJ8E550","apiKey":"d050e8704a1173bb5f72414e4300eed1","indexName":"pandamac","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1. docset 1.1. 阅读本篇文章需求 1.2. 什么是docset 1.3. 哪里可以下载docset 1.4. 为什么要自己生成docset 1.5. 哪里软件支持docset 1.5.1. dash 1.5.2. 类似dash的工具 1.5.3. 官方工具支持自定义docset 1.5.3.1. doc2dash 1.5.3.2. dash-docset-builder   1.5">
+<meta name="keywords" content="docset,dash">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何创建docset">
+<meta property="og:url" content="http://pandamac.github.io/2020/02/22/config/%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BAdocset/index.html">
+<meta property="og:site_name" content="pandamac&#39;s Note">
+<meta property="og:description" content="1. docset 1.1. 阅读本篇文章需求 1.2. 什么是docset 1.3. 哪里可以下载docset 1.4. 为什么要自己生成docset 1.5. 哪里软件支持docset 1.5.1. dash 1.5.2. 类似dash的工具 1.5.3. 官方工具支持自定义docset 1.5.3.1. doc2dash 1.5.3.2. dash-docset-builder   1.5">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pandamac.github.io/2020/02/22/config/%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BAdocset/pic/73436.png">
+<meta property="og:image" content="http://pandamac.github.io/2020/02/22/config/%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BAdocset/pic/355453.png">
+<meta property="og:updated_time" content="2020-02-23T15:27:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pandamac.github.io/2020/02/22/config/%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BAdocset/pic/73436.png">
+
+<link rel="canonical" href="http://pandamac.github.io/2020/02/22/config/%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BAdocset/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>如何创建docset | pandamac's Note</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="pandamac's Note" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">pandamac's Note</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right"></div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://pandamac.github.io/2020/02/22/config/%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BAdocset/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="pandamac">
+      <meta itemprop="description" content="Android/iOS/Macos">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pandamac's Note">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何创建docset
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-22-00:28 00:28:40" itemprop="dateCreated datePublished" datetime="2020-02-22T00:28:40+08:00">2020-02-22-00:28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-23-23:27 23:27:22" itemprop="dateModified" datetime="2020-02-23T23:27:22+08:00">2020-02-23-23:27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index">
+                    <span itemprop="name">tools</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/dash/" itemprop="url" rel="index">
+                    <span itemprop="name">dash</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li><a href="#1-docset">1. docset</a><ul>
+<li><a href="#11-%e9%98%85%e8%af%bb%e6%9c%ac%e7%af%87%e6%96%87%e7%ab%a0%e9%9c%80%e6%b1%82">1.1. 阅读本篇文章需求</a></li>
+<li><a href="#12-%e4%bb%80%e4%b9%88%e6%98%afdocset">1.2. 什么是docset</a></li>
+<li><a href="#13-%e5%93%aa%e9%87%8c%e5%8f%af%e4%bb%a5%e4%b8%8b%e8%bd%bddocset">1.3. 哪里可以下载docset</a></li>
+<li><a href="#14-%e4%b8%ba%e4%bb%80%e4%b9%88%e8%a6%81%e8%87%aa%e5%b7%b1%e7%94%9f%e6%88%90docset">1.4. 为什么要自己生成docset</a></li>
+<li><a href="#15-%e5%93%aa%e9%87%8c%e8%bd%af%e4%bb%b6%e6%94%af%e6%8c%81docset">1.5. 哪里软件支持docset</a><ul>
+<li><a href="#151-dash">1.5.1. dash</a></li>
+<li><a href="#152-%e7%b1%bb%e4%bc%bcdash%e7%9a%84%e5%b7%a5%e5%85%b7">1.5.2. 类似dash的工具</a></li>
+<li><a href="#153-%e5%ae%98%e6%96%b9%e5%b7%a5%e5%85%b7%e6%94%af%e6%8c%81%e8%87%aa%e5%ae%9a%e4%b9%89docset">1.5.3. 官方工具支持自定义docset</a><ul>
+<li><a href="#1531-doc2dash">1.5.3.1. doc2dash</a></li>
+<li><a href="#1532-dash-docset-builder">1.5.3.2. dash-docset-builder</a></li>
+</ul>
+</li>
+<li><a href="#154-%e5%ae%98%e6%96%b9%e6%89%8b%e5%8a%a8%e6%96%b9%e6%b3%95%e8%87%aa%e5%ae%9a%e4%b9%89docset">1.5.4. 官方手动方法自定义docset</a></li>
+<li><a href="#155-%e8%87%aa%e5%ae%9a%e4%b9%89%e7%94%9f%e6%88%90docset">1.5.5. 自定义生成docset</a><ul>
+<li><a href="#1551-%e8%8e%b7%e5%8f%96htm%e5%b9%b6%e7%94%9f%e6%88%90docset">1.5.5.1. 获取htm,并生成docset</a></li>
+<li><a href="#1552-%e5%88%9b%e5%bb%ba%e7%b4%a2%e5%bc%95">1.5.5.2. 创建索引</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#16-%e6%80%bb%e7%bb%93">1.6. 总结</a></li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h1 id="1-docset"><a href="#1-docset" class="headerlink" title="1. docset"></a>1. docset</h1><h2 id="1-1-阅读本篇文章需求"><a href="#1-1-阅读本篇文章需求" class="headerlink" title="1.1. 阅读本篇文章需求"></a>1.1. 阅读本篇文章需求</h2><p>1.知道docset是什么，后面会介绍<br>2.知道dash 如何使用，或者知道怎么使用docset</p>
+<h2 id="1-2-什么是docset"><a href="#1-2-什么是docset" class="headerlink" title="1.2. 什么是docset"></a>1.2. 什么是docset</h2><p><a href="https://kapeli.com/dash_guide" target="_blank" rel="noopener">https://kapeli.com/dash_guide</a><br>Documentation sets, or docsets, consist of collections of HTML files. Dash uses these docsets to store the docs you need. This section describes the various features Dash has to help you acquire and manange docsets.<br><a href="https://fileinfo.com/extension/docset" target="_blank" rel="noopener">https://fileinfo.com/extension/docset</a><br>What is a DOCSET file?<br>Developer file created by Doxygen, a source code documentation system; contains an archive of documentation about a body of source code, which can encompass many different individual source code files and code constructs; used as the storage format for publishing documentation to developers that use the source code.</p>
+<h2 id="1-3-哪里可以下载docset"><a href="#1-3-哪里可以下载docset" class="headerlink" title="1.3. 哪里可以下载docset"></a>1.3. 哪里可以下载docset</h2><p>dash.app 可以直接下<br>Docsets can be downloaded Dash’s Preferences &gt; Downloads.</p>
+<h2 id="1-4-为什么要自己生成docset"><a href="#1-4-为什么要自己生成docset" class="headerlink" title="1.4. 为什么要自己生成docset"></a>1.4. 为什么要自己生成docset</h2><p>想定制一些自己查询的文档，这些文档没有别人做好的docset可以下，能找到一些html,但如果每次都查询html又觉得麻烦，所以有了自定义docset的想法。</p>
+<h2 id="1-5-哪里软件支持docset"><a href="#1-5-哪里软件支持docset" class="headerlink" title="1.5. 哪里软件支持docset"></a>1.5. 哪里软件支持docset</h2><h3 id="1-5-1-dash"><a href="#1-5-1-dash" class="headerlink" title="1.5.1. dash"></a>1.5.1. dash</h3><p>作为一名程序员，最离不开的就是文档了，大多数情况下我们都是通过文档了解一个陌生的领域。想象一下，打开了一堆文档，在文档中跳来跳去，多么的不优雅！所以Bogdan Popescu一怒之下开发了dash，解放了太多在文档中跳来跳去的码农。<br>自带大量常用文档(iOS/Mac/PHP/Python/Java等)<br>支持用户自定义文档(scrapy/requests/beautifulsoup等)<br>快速搜索文档及 API<br>管理和搜索代码片段<br>无缝插入众多第三方应用(Alfred/Xcode/Terminal等)<br><img src="./pic/73436.png" alt="73436.png"></p>
+<h3 id="1-5-2-类似dash的工具"><a href="#1-5-2-类似dash的工具" class="headerlink" title="1.5.2. 类似dash的工具"></a>1.5.2. 类似dash的工具</h3><p><a href="https://doc2dash.readthedocs.io/en/latest/installation.html#viewer" target="_blank" rel="noopener">https://doc2dash.readthedocs.io/en/latest/installation.html#viewer</a><br>To view the results, you will need a docset viewer, the most commonly known being Dash.app for macOS.<br>Other alternatives have been developed in cooperation with Dash.app’s developer Kapeli:<br>helm-dash for Emacs,<br>velocity for Windows,<br>and zeal for Linux, macOS, and Windows.</p>
+<h3 id="1-5-3-官方工具支持自定义docset"><a href="#1-5-3-官方工具支持自定义docset" class="headerlink" title="1.5.3. 官方工具支持自定义docset"></a>1.5.3. 官方工具支持自定义docset</h3><h4 id="1-5-3-1-doc2dash"><a href="#1-5-3-1-doc2dash" class="headerlink" title="1.5.3.1. doc2dash"></a>1.5.3.1. doc2dash</h4><p>Instructions on generating docsets can be found in the Docset Generation Guide.<br>doc2dash is an MIT-licensed extensible Documentation Set generator intended to be used with the Dash.app API browser for macOS or one of its many free clones for all relevant platforms.<br>If you’ve never heard of Dash.app and its likes, you’re missing out: together with doc2dash it’s all your API documentation at your fingertips – even when you’re offline!<br>doc2dash’s documentation lives at Read the Docs, the code on GitHub. It’s tested on Python 2.7, 3.4+, and PyPy. Both Linux and macOS are tested although certain features are only available on macOS.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd docs &amp;&amp; make html</span><br><span class="line">doc2dash html</span><br></pre></td></tr></table></figure>
+<p>一些项目有规范的doc文档，可以用doc2dash 来生成docset.</p>
+<h4 id="1-5-3-2-dash-docset-builder"><a href="#1-5-3-2-dash-docset-builder" class="headerlink" title="1.5.3.2. dash-docset-builder"></a>1.5.3.2. dash-docset-builder</h4><p>php写的，功能还是很全，但是不太会调<br><a href="https://github.com/godbout/dash-docset-builder" target="_blank" rel="noopener">https://github.com/godbout/dash-docset-builder</a></p>
+<h3 id="1-5-4-官方手动方法自定义docset"><a href="#1-5-4-官方手动方法自定义docset" class="headerlink" title="1.5.4. 官方手动方法自定义docset"></a>1.5.4. 官方手动方法自定义docset</h3><p><a href="https://kapeli.com/docsets#copyDocumentation" target="_blank" rel="noopener">https://kapeli.com/docsets#copyDocumentation</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">13.1. Create the Docset Folder#</span><br><span class="line">The docset folder structure can be created using this Terminal command:</span><br><span class="line"></span><br><span class="line">mkdir -p &lt;docset name&gt;.docset&#x2F;Contents&#x2F;Resources&#x2F;Documents&#x2F;</span><br><span class="line">You can also manually create the docset structure if you want, they&#39;re just folders.</span><br><span class="line"></span><br><span class="line">13.2. Copy the HTML Documentation#</span><br><span class="line">Copy the HTML documentation you already have to this folder:</span><br><span class="line"></span><br><span class="line">&lt;docset name&gt;.docset&#x2F;Contents&#x2F;Resources&#x2F;Documents&#x2F;</span><br><span class="line">13.3. Create the Info.plist File#</span><br><span class="line">Download and edit this sample Info.plist and place it in the &lt;docset name&gt;.docset&#x2F;Contents&#x2F; folder. Editing should be straightforward, just set the values to whatever name you want for your docset.</span><br><span class="line"></span><br><span class="line">13.4. Create the SQLite Index#</span><br><span class="line">Create a SQLite database in the file &lt;docset name&gt;.docset&#x2F;Contents&#x2F;Resources&#x2F;docSet.dsidx with the following query:</span><br><span class="line"></span><br><span class="line">CREATE TABLE searchIndex(id INTEGER PRIMARY KEY, name TEXT, type TEXT, path TEXT);</span><br><span class="line">Recommended: you can easily prevent adding duplicate entries to the index by also using this query:</span><br><span class="line"></span><br><span class="line">CREATE UNIQUE INDEX anchor ON searchIndex (name, type, path);</span><br><span class="line">13.5. Populate the SQLite Index#</span><br><span class="line">You need to create a script (or application or whatever) that will go through your HTML documentation and add appropriate rows into the SQLite database. Rows can be added using this query:</span><br><span class="line"></span><br><span class="line">INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES (&#39;name&#39;, &#39;type&#39;, &#39;path&#39;);</span><br><span class="line">The values are:</span><br><span class="line"></span><br><span class="line">name is the name of the entry. For example, if you are adding a class, it would be the name of the class. This is the column that Dash searches.</span><br><span class="line">type is the type of the entry. For example, if you are adding a class, it would be &quot;Class&quot;. For a list of types that Dash recognises, see below.</span><br><span class="line">path is the relative path towards the documentation file you want Dash to display for this entry. It can contain an anchor (#). Alternatively, Dash also supports http:&#x2F;&#x2F; URL entries.</span><br><span class="line"></span><br><span class="line">You can find a few generation script examples here.</span><br><span class="line">[https:&#x2F;&#x2F;kapeli.com&#x2F;docsets#scriptExamples](https:&#x2F;&#x2F;kapeli.com&#x2F;docsets#scriptExamples)</span><br></pre></td></tr></table></figure>
+<h3 id="1-5-5-自定义生成docset"><a href="#1-5-5-自定义生成docset" class="headerlink" title="1.5.5. 自定义生成docset"></a>1.5.5. 自定义生成docset</h3><p>因为别的方法无法具体实现想指定的dash xxx 搜索指令，不能很方便的扩展搜索方式，自己实现可以实现任意html生成dash 的方式</p>
+<h4 id="1-5-5-1-获取htm-并生成docset"><a href="#1-5-5-1-获取htm-并生成docset" class="headerlink" title="1.5.5.1. 获取htm,并生成docset"></a>1.5.5.1. 获取htm,并生成docset</h4><p>使用dash 代码片段生成得到指定网页的html,并生成docset格式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;sh</span><br><span class="line">wget --recursive \</span><br><span class="line">  --html-extension \</span><br><span class="line">  --convert-links \</span><br><span class="line">  --domains ~_~lldb.llvm.org~_~ \</span><br><span class="line">  --restrict-file-names&#x3D;windows \</span><br><span class="line">  --page-requisites \</span><br><span class="line">  --reject pdf \</span><br><span class="line">  --no-parent ~_~lldb.llvm.org~_~&#x2F;~_~arm~_~.html</span><br><span class="line"></span><br><span class="line">if [ -d &quot;~_~arm~_~.docset&quot; ]; then</span><br><span class="line">    echo &quot;~_~arm~_~.docset exitst, please delete it&quot;</span><br><span class="line">    return</span><br><span class="line">fi</span><br><span class="line">contents&#x3D;~_~arm~_~.docset&#x2F;Contents</span><br><span class="line">res&#x3D;$contents&#x2F;Resources</span><br><span class="line">doc&#x3D;$res&#x2F;Documents</span><br><span class="line">mkdir -p $doc</span><br><span class="line">cp frida.png ~_~arm~_~.docset&#x2F;icon.png</span><br><span class="line">mv ~_~arm~_~.html $doc</span><br><span class="line"></span><br><span class="line">rm $res&#x2F;docSet.dsidx</span><br><span class="line"></span><br><span class="line">cat &gt; $contents&#x2F;Info.plist &lt;&lt;- &quot;EOF&quot;</span><br><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE plist PUBLIC &quot;-&#x2F;&#x2F;Apple&#x2F;&#x2F;DTD PLIST 1.0&#x2F;&#x2F;EN&quot; &quot;http:&#x2F;&#x2F;www.apple.com&#x2F;DTDs&#x2F;PropertyList-1.0.dtd&quot;&gt;</span><br><span class="line">&lt;plist version&#x3D;&quot;1.0&quot;&gt;</span><br><span class="line">&lt;dict&gt;</span><br><span class="line">  &lt;key&gt;CFBundleIdentifier&lt;&#x2F;key&gt;</span><br><span class="line">  &lt;string&gt;~_~arm~_~&lt;&#x2F;string&gt;</span><br><span class="line">  &lt;key&gt;CFBundleName&lt;&#x2F;key&gt;</span><br><span class="line">  &lt;string&gt;~_~arm~_~&lt;&#x2F;string&gt;</span><br><span class="line">  &lt;key&gt;DocSetPlatformFamily&lt;&#x2F;key&gt;</span><br><span class="line">  &lt;string&gt;~_~arm~_~&lt;&#x2F;string&gt;</span><br><span class="line">  &lt;key&gt;dashIndexFilePath&lt;&#x2F;key&gt;</span><br><span class="line">  &lt;string&gt;~_~arm~_~.html&lt;&#x2F;string&gt;</span><br><span class="line">  &lt;key&gt;isDashDocset&lt;&#x2F;key&gt;</span><br><span class="line">  &lt;true&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;dict&gt;</span><br><span class="line">&lt;&#x2F;plist&gt;</span><br><span class="line">EOF</span><br><span class="line">echo &#39;done&#39;</span><br></pre></td></tr></table></figure>
+<h4 id="1-5-5-2-创建索引"><a href="#1-5-5-2-创建索引" class="headerlink" title="1.5.5.2. 创建索引"></a>1.5.5.2. 创建索引</h4><p>如以下代码创建了 radare2 这个工具的html的docset<br><img src="./pic/355453.png" alt="355453.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import sqlite3</span><br><span class="line"></span><br><span class="line">from pathlib import Path</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line"></span><br><span class="line"># CREATE TABLE searchIndex(id INTEGER PRIMARY KEY, name TEXT, type TEXT, path TEXT);</span><br><span class="line"># CREATE UNIQUE INDEX anchor ON searchIndex (name, type, path);</span><br><span class="line"># INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES (&#39;Exploit&#39;, &#39;Class&#39;, &#39;index.html&#39;);</span><br><span class="line">respath&#x3D;&quot;~_~arm~_~.docset&#x2F;Contents&#x2F;Resources&quot;</span><br><span class="line">conn &#x3D; sqlite3.connect(&#39;&#123;&#125;&#x2F;docSet.dsidx&#39;.format(respath))</span><br><span class="line">conn.executescript(&#39;&#39;&#39;</span><br><span class="line">    CREATE TABLE IF NOT EXISTS searchIndex(id INTEGER PRIMARY KEY, name TEXT, type TEXT, path TEXT);</span><br><span class="line">    CREATE UNIQUE INDEX IF NOT EXISTS anchor ON searchIndex (name, type, path);&#39;&#39;&#39;)</span><br><span class="line"></span><br><span class="line">def insert(*args):</span><br><span class="line">    conn.execute(&#39;&#39;&#39;INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES (?, ?, ?);&#39;&#39;&#39;, args)</span><br><span class="line"></span><br><span class="line">filename&#x3D;&quot;&#123;&#125;&#x2F;Documents&#x2F;~_~arm~_~.html&quot;.format(respath)</span><br><span class="line">with open(filename) as fp:</span><br><span class="line">    html &#x3D; fp.read()</span><br><span class="line">print(&quot;filename&#x3D;&#123;&#125;&quot;.format(filename))</span><br><span class="line">soup &#x3D; BeautifulSoup(html)</span><br><span class="line"></span><br><span class="line">relpath &#x3D; str(Path(filename).relative_to(&quot;&#123;&#125;&#x2F;Documents&quot;.format(respath)))</span><br><span class="line"></span><br><span class="line"># Rax2 1.12.1</span><br><span class="line"># Rafind2 1.12.2</span><br><span class="line"># Rarun2 1.12.3</span><br><span class="line"># Rabin2 1.12.4</span><br><span class="line"># Radiff2 1.12.5</span><br><span class="line"># Rasm2 1.12.6</span><br><span class="line"># Ragg2 1.12.7</span><br><span class="line"># Rahash2 1.12.8</span><br><span class="line"></span><br><span class="line">type &#x3D; &quot;Method&quot;</span><br><span class="line"></span><br><span class="line">for subtitle in soup.select(&quot;a&quot;):</span><br><span class="line">    if not subtitle:</span><br><span class="line">        break</span><br><span class="line">    if subtitle &#x3D;&#x3D; &quot;\n&quot;:</span><br><span class="line">        continue</span><br><span class="line">    if subtitle.text !&#x3D; &quot;Rax2&quot; and subtitle.text !&#x3D; &quot;Rafind2&quot; and subtitle.text !&#x3D; &quot;Rarun2&quot; \</span><br><span class="line">            and subtitle.text !&#x3D; &quot;Rabin2&quot; and subtitle.text !&#x3D; &quot;Radiff2&quot; and subtitle.text !&#x3D; &quot;Rasm2&quot;\</span><br><span class="line">            and subtitle.text !&#x3D; &quot;Ragg2&quot; and subtitle.text !&#x3D; &quot;Rahash2&quot;:</span><br><span class="line">        continue</span><br><span class="line"></span><br><span class="line">    name &#x3D; subtitle.text</span><br><span class="line">    # path&#x3D;&#39;%s#%s&#39; % (relpath, name)</span><br><span class="line">    path&#x3D;&quot;&#123;&#125;&#123;&#125;&quot;.format(relpath,subtitle[&quot;href&quot;].lower())</span><br><span class="line">    print(&quot;&#123;&#125;\t\t&#123;&#125;\t\t&#123;&#125;&quot;.format(name,type,path))</span><br><span class="line">    insert(name, type, path)</span><br><span class="line"></span><br><span class="line">conn.commit()</span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure>
+<h2 id="1-6-总结"><a href="#1-6-总结" class="headerlink" title="1.6. 总结"></a>1.6. 总结</h2><p>1.遇到问题多看官网，官网有解决办法，不用你老人家瞎琢磨耽误时间<br>2.看文档细心。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/docset/" rel="tag"># docset</a>
+              <a href="/tags/dash/" rel="tag"># dash</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/23/tips_about/lldb-help/" rel="next" title="lldb_help">
+      lldb_help <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  
+  <div class="comments">
+  <script src="https://utteranc.es/client.js" repo="pandamac/pandamac.github.io" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script>
+  </div>
+  
+  
+  <div class="comments" id="comments">
+      
+  <script src="https://utteranc.es/client.js"
+    repo="pandamac/pandamac.github.io"
+    issue-term=""
+    theme="github-light"
+    crossorigin="anonymous"
+    async>
+  </script>
+
+    </div>
+    
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-docset"><span class="nav-text">1. docset</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-阅读本篇文章需求"><span class="nav-text">1.1. 阅读本篇文章需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-什么是docset"><span class="nav-text">1.2. 什么是docset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-哪里可以下载docset"><span class="nav-text">1.3. 哪里可以下载docset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-为什么要自己生成docset"><span class="nav-text">1.4. 为什么要自己生成docset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-哪里软件支持docset"><span class="nav-text">1.5. 哪里软件支持docset</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-1-dash"><span class="nav-text">1.5.1. dash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-2-类似dash的工具"><span class="nav-text">1.5.2. 类似dash的工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-3-官方工具支持自定义docset"><span class="nav-text">1.5.3. 官方工具支持自定义docset</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-3-1-doc2dash"><span class="nav-text">1.5.3.1. doc2dash</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-3-2-dash-docset-builder"><span class="nav-text">1.5.3.2. dash-docset-builder</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-4-官方手动方法自定义docset"><span class="nav-text">1.5.4. 官方手动方法自定义docset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-5-自定义生成docset"><span class="nav-text">1.5.5. 自定义生成docset</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-5-1-获取htm-并生成docset"><span class="nav-text">1.5.5.1. 获取htm,并生成docset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-5-2-创建索引"><span class="nav-text">1.5.5.2. 创建索引</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-总结"><span class="nav-text">1.6. 总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">pandamac</p>
+  <div class="site-description" itemprop="description">Android/iOS/Macos</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pandamac/pandamac.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pandamac&#x2F;pandamac.github.io" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:pandashellcode@163.com" title="E-Mail → mailto:pandashellcode@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; Sun Feb 23 2020 08:00:00 GMT+0800 (China Standard Time) – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">pandamac</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">72k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:05</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      script.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+    </div>
+</body>
+</html>
