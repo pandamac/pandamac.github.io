@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://pandamac.github.io/2023/07/30/testPassword/</loc>
+    
+    <lastmod>2023-07-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://pandamac.github.io/2020/11/06/browser_about/CVE-2019-5782-zhaoqixun-2018-11-16%E5%8F%91-7-2/</loc>
     
     <lastmod>2021-11-23</lastmod>
@@ -108,20 +117,6 @@
   </url>
   
   <url>
-    <loc>http://pandamac.github.io/tags/docset/</loc>
-    <lastmod>2023-07-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://pandamac.github.io/tags/dash/</loc>
-    <lastmod>2023-07-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://pandamac.github.io/tags/frida/</loc>
     <lastmod>2023-07-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -130,6 +125,20 @@
   
   <url>
     <loc>http://pandamac.github.io/tags/burp/</loc>
+    <lastmod>2023-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://pandamac.github.io/tags/docset/</loc>
+    <lastmod>2023-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://pandamac.github.io/tags/dash/</loc>
     <lastmod>2023-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -163,6 +172,20 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>http://pandamac.github.io/tags/test/</loc>
+    <lastmod>2023-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://pandamac.github.io/tags/fuzz/</loc>
+    <lastmod>2023-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
@@ -187,14 +210,14 @@
   </url>
   
   <url>
-    <loc>http://pandamac.github.io/categories/tools/dash/</loc>
+    <loc>http://pandamac.github.io/categories/tools/frida/</loc>
     <lastmod>2023-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://pandamac.github.io/categories/tools/frida/</loc>
+    <loc>http://pandamac.github.io/categories/tools/dash/</loc>
     <lastmod>2023-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -216,6 +239,13 @@
   
   <url>
     <loc>http://pandamac.github.io/categories/tools/ida/tips/</loc>
+    <lastmod>2023-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://pandamac.github.io/categories/Diary/</loc>
     <lastmod>2023-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
