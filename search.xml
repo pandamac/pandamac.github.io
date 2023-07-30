@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>testPassword</title>
-    <url>/2023/07/30/testPassword/</url>
-    <content><![CDATA[<p>test password</p>
-]]></content>
-      <categories>
-        <category>Diary</category>
-      </categories>
-      <tags>
-        <tag>test</tag>
-        <tag>fuzz</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CVE-2019-5782_zhaoqixun_2018_11_16发_7.2</title>
     <url>/2020/11/06/browser_about/CVE-2019-5782-zhaoqixun-2018-11-16%E5%8F%91-7-2/</url>
     <content><![CDATA[<p>[TOC]</p>
