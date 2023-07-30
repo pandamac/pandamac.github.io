@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
+<meta name="generator" content="Hexo 7.0.0-rc2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -13,25 +13,28 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"pandamac.github.io","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"F8APJ8E550","apiKey":"d050e8704a1173bb5f72414e4300eed1","indexName":"pandamac","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"pandamac.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"F8APJ8E550","apiKey":"d050e8704a1173bb5f72414e4300eed1","indexName":"pandamac","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="frida-trace扩展信息到burp[TOC] 1. 简介参考原文Tracing API calls in Burp with Frida 利用frida实现一个与burp结合实时修改二进制函数参数返回值插件。  可以burp查看frida hook的值，burp有很多非常人性化的界面可以参考。 可以burp修改hook的参数，注入测试 NSString* NSData* byte * or">
-<meta name="keywords" content="frida,burp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="frida-trace扩展信息到burp">
 <meta property="og:url" content="http://pandamac.github.io/2020/03/13/frida_about/frida-trace-burp/index.html">
 <meta property="og:site_name" content="pandamac&#39;s Note">
 <meta property="og:description" content="frida-trace扩展信息到burp[TOC] 1. 简介参考原文Tracing API calls in Burp with Frida 利用frida实现一个与burp结合实时修改二进制函数参数返回值插件。  可以burp查看frida hook的值，burp有很多非常人性化的界面可以参考。 可以burp修改hook的参数，注入测试 NSString* NSData* byte * or">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.loli.net/2020/03/13/s4Oja7CBWD2umLv.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/03/13/vC6QbUEVcH21rfY.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/03/13/Pni6xCwveEyF9UL.jpg">
-<meta property="og:updated_time" content="2020-03-23T14:19:47.000Z">
+<meta property="article:published_time" content="2020-03-13T09:18:48.000Z">
+<meta property="article:modified_time" content="2020-03-23T14:19:47.000Z">
+<meta property="article:author" content="pandamac">
+<meta property="article:tag" content="frida">
+<meta property="article:tag" content="burp">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.loli.net/2020/03/13/s4Oja7CBWD2umLv.jpg">
 
@@ -42,8 +45,9 @@
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
-    isPost: true
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
   };
 </script>
 
@@ -97,50 +101,53 @@
 
   <div class="site-meta">
 
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">pandamac's Note</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">pandamac's Note</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
   </div>
 
-  <div class="site-nav-right"></div>
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
 </div>
 
 
+
+
 <nav class="site-nav">
-  
-  <ul id="menu" class="menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
 
   </li>
         <li class="menu-item menu-item-sitemap">
 
-    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -148,16 +155,18 @@
         </a>
       </li>
   </ul>
-
 </nav>
-  <div class="site-search">
+
+
+
+  <div class="search-pop-overlay">
     <div class="popup search-popup">
-    <div class="search-header">
+        <div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+    <input autocomplete="off" autocapitalize="off"
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
@@ -165,12 +174,15 @@
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result"></div>
-
-</div>
-<div class="search-pop-overlay"></div>
-
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
   </div>
+</div>
+
+    </div>
+  </div>
+
 </div>
     </header>
 
@@ -186,14 +198,13 @@
         <div class="content-wrap">
           
 
-          <div class="content">
+          <div class="content post posts-expand">
             
 
-  <div class="posts-expand">
-      
+    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://pandamac.github.io/2020/03/13/frida_about/frida-trace-burp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -213,7 +224,7 @@
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
 
@@ -221,26 +232,22 @@
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
+                  <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2020-03-23-22:19 22:19:47" itemprop="dateModified" datetime="2020-03-23T22:19:47+08:00">2020-03-23-22:19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
+                <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tools/" itemprop="url" rel="index">
-                    <span itemprop="name">tools</span>
-                  </a>
+                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tools/frida/" itemprop="url" rel="index">
-                    <span itemprop="name">frida</span>
-                  </a>
+                  <a href="/categories/tools/frida/" itemprop="url" rel="index"><span itemprop="name">frida</span></a>
                 </span>
             </span>
 
@@ -251,20 +258,6 @@
               </span>
               <span class="post-meta-item-text">阅读次数：</span>
               <span id="busuanzi_value_page_pv"></span>
-            </span><br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>6.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
             </span>
 
         </div>
@@ -277,16 +270,14 @@
 
       
         <h1 id="frida-trace扩展信息到burp"><a href="#frida-trace扩展信息到burp" class="headerlink" title="frida-trace扩展信息到burp"></a>frida-trace扩展信息到burp</h1><p>[TOC]</p>
-<h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><p>参考原文<a href="https://cedricvb.be/post/tracing-api-calls-in-burp-with-frida/#prettyPhoto" target="_blank" rel="noopener">Tracing API calls in Burp with Frida</a></p>
+<h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><p>参考原文<a target="_blank" rel="noopener" href="https://cedricvb.be/post/tracing-api-calls-in-burp-with-frida/#prettyPhoto">Tracing API calls in Burp with Frida</a></p>
 <p>利用frida实现一个与burp结合实时修改二进制函数参数返回值插件。</p>
 <ol>
 <li>可以burp查看frida hook的值，burp有很多非常人性化的界面可以参考。</li>
 <li>可以burp修改hook的参数，注入测试<ol>
 <li>NSString*</li>
 <li>NSData*</li>
-<li>byte * or char*<a id="more"></a>
-
-</li>
+<li>byte * or char*<span id="more"></span></li>
 </ol>
 </li>
 </ol>
@@ -295,14 +286,14 @@
 <li>python3 tracer.py -m “+[EncryptUtils AESEncrypt:key:]” -f me.pandamac.iOSPentest -D c27808502c1f74e1659074e5154256360fe17f648 </li>
 <li>python3 tracer.py -m  “-[EncryptUtils ret_NSData_by_bytes:byNSString:]” -f me.pandamac.iOSPentest -D c7808502c1f74e1659074e5154256360fe17f648</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> frida_tools <span class="keyword">import</span> tracer</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">BURP_HOST = <span class="string">'localhost'</span></span><br><span class="line">BURP_PORT = <span class="number">26080</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">frida_process_message</span><span class="params">(self, message, data, ui)</span>:</span></span><br><span class="line">    handled = <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> message[<span class="string">'type'</span>] == <span class="string">'input'</span>:</span><br><span class="line">        handled = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">elif</span> message[<span class="string">'type'</span>] == <span class="string">'send'</span>:</span><br><span class="line">        stanza = message[<span class="string">'payload'</span>]</span><br><span class="line">        <span class="keyword">if</span> stanza[<span class="string">'from'</span>] == <span class="string">'/request'</span>:</span><br><span class="line">            req_data = stanza[<span class="string">'payload'</span>]</span><br><span class="line">            print(req_data)</span><br><span class="line">            <span class="comment"># orig_json_data = json.loads(req_data)</span></span><br><span class="line">            <span class="comment"># orig_request_url = orig_json_data.pop(u'orig_request_url')</span></span><br><span class="line">            orig_request_url = <span class="string">'execute'</span></span><br><span class="line">            req = requests.request(<span class="string">'REQUEST'</span>,</span><br><span class="line">                                  <span class="string">'http://%s:%d/'</span> % (BURP_HOST, BURP_PORT),</span><br><span class="line">                                  headers=&#123;</span><br><span class="line">                                      <span class="string">'content-type'</span>: <span class="string">'text/plain'</span>,</span><br><span class="line">                                      <span class="string">'ORIG_REQUEST_URI'</span>: orig_request_url</span><br><span class="line">                                  &#125;,</span><br><span class="line">                                  data=req_data)</span><br><span class="line">            return_content = req.content.decode(<span class="string">'utf-8'</span>)</span><br><span class="line">            <span class="comment"># req = requests.request('REQUEST', 'http://%s:%d/' % (BURP_HOST, BURP_PORT),</span></span><br><span class="line">            <span class="comment">#                        headers=&#123;'content-type':'text/plain', 'ORIG_REQUEST_URI': orig_request_url&#125;,</span></span><br><span class="line">            <span class="comment">#                        data=json.dumps(orig_json_data))</span></span><br><span class="line">            self._script.post(&#123;<span class="string">'type'</span>:<span class="string">'input'</span>, <span class="string">'payload'</span>: return_content&#125;)</span><br><span class="line">            handled = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">elif</span> stanza[<span class="string">'from'</span>] == <span class="string">'/response'</span>:</span><br><span class="line">            req_data = stanza[<span class="string">'payload'</span>].encode(<span class="string">'utf-8'</span>)</span><br><span class="line">            req = requests.request(<span class="string">'RESPONSE'</span>, <span class="string">'http://%s:%d/'</span> % (BURP_HOST, BURP_PORT),</span><br><span class="line">                                   headers=&#123;<span class="string">'content-type'</span>: <span class="string">'text/plain'</span>&#125;,</span><br><span class="line">                                   data=req_data)</span><br><span class="line">            self._script.post(&#123;<span class="string">'type'</span>: <span class="string">'output'</span>, <span class="string">'payload'</span>: req.content.decode(<span class="string">'utf-8'</span>)&#125;)</span><br><span class="line">            handled = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> handled:</span><br><span class="line">        self.__process_message(message, data, ui)</span><br><span class="line"></span><br><span class="line">tracer.Tracer.__process_message = tracer.Tracer._process_message</span><br><span class="line">tracer.Tracer._process_message = frida_process_message</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    tracer.main()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> frida_tools <span class="keyword">import</span> tracer</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">BURP_HOST = <span class="string">&#x27;localhost&#x27;</span></span><br><span class="line">BURP_PORT = <span class="number">26080</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">frida_process_message</span>(<span class="params">self, message, data, ui</span>):</span><br><span class="line">    handled = <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> message[<span class="string">&#x27;type&#x27;</span>] == <span class="string">&#x27;input&#x27;</span>:</span><br><span class="line">        handled = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">elif</span> message[<span class="string">&#x27;type&#x27;</span>] == <span class="string">&#x27;send&#x27;</span>:</span><br><span class="line">        stanza = message[<span class="string">&#x27;payload&#x27;</span>]</span><br><span class="line">        <span class="keyword">if</span> stanza[<span class="string">&#x27;from&#x27;</span>] == <span class="string">&#x27;/request&#x27;</span>:</span><br><span class="line">            req_data = stanza[<span class="string">&#x27;payload&#x27;</span>]</span><br><span class="line">            <span class="built_in">print</span>(req_data)</span><br><span class="line">            <span class="comment"># orig_json_data = json.loads(req_data)</span></span><br><span class="line">            <span class="comment"># orig_request_url = orig_json_data.pop(u&#x27;orig_request_url&#x27;)</span></span><br><span class="line">            orig_request_url = <span class="string">&#x27;execute&#x27;</span></span><br><span class="line">            req = requests.request(<span class="string">&#x27;REQUEST&#x27;</span>,</span><br><span class="line">                                  <span class="string">&#x27;http://%s:%d/&#x27;</span> % (BURP_HOST, BURP_PORT),</span><br><span class="line">                                  headers=&#123;</span><br><span class="line">                                      <span class="string">&#x27;content-type&#x27;</span>: <span class="string">&#x27;text/plain&#x27;</span>,</span><br><span class="line">                                      <span class="string">&#x27;ORIG_REQUEST_URI&#x27;</span>: orig_request_url</span><br><span class="line">                                  &#125;,</span><br><span class="line">                                  data=req_data)</span><br><span class="line">            return_content = req.content.decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">            <span class="comment"># req = requests.request(&#x27;REQUEST&#x27;, &#x27;http://%s:%d/&#x27; % (BURP_HOST, BURP_PORT),</span></span><br><span class="line">            <span class="comment">#                        headers=&#123;&#x27;content-type&#x27;:&#x27;text/plain&#x27;, &#x27;ORIG_REQUEST_URI&#x27;: orig_request_url&#125;,</span></span><br><span class="line">            <span class="comment">#                        data=json.dumps(orig_json_data))</span></span><br><span class="line">            self._script.post(&#123;<span class="string">&#x27;type&#x27;</span>:<span class="string">&#x27;input&#x27;</span>, <span class="string">&#x27;payload&#x27;</span>: return_content&#125;)</span><br><span class="line">            handled = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">elif</span> stanza[<span class="string">&#x27;from&#x27;</span>] == <span class="string">&#x27;/response&#x27;</span>:</span><br><span class="line">            req_data = stanza[<span class="string">&#x27;payload&#x27;</span>].encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">            req = requests.request(<span class="string">&#x27;RESPONSE&#x27;</span>, <span class="string">&#x27;http://%s:%d/&#x27;</span> % (BURP_HOST, BURP_PORT),</span><br><span class="line">                                   headers=&#123;<span class="string">&#x27;content-type&#x27;</span>: <span class="string">&#x27;text/plain&#x27;</span>&#125;,</span><br><span class="line">                                   data=req_data)</span><br><span class="line">            self._script.post(&#123;<span class="string">&#x27;type&#x27;</span>: <span class="string">&#x27;output&#x27;</span>, <span class="string">&#x27;payload&#x27;</span>: req.content.decode(<span class="string">&#x27;utf-8&#x27;</span>)&#125;)</span><br><span class="line">            handled = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> handled:</span><br><span class="line">        self.__process_message(message, data, ui)</span><br><span class="line"></span><br><span class="line">tracer.Tracer.__process_message = tracer.Tracer._process_message</span><br><span class="line">tracer.Tracer._process_message = frida_process_message</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    tracer.main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h3 id="2-2-127-0-0-1-26080-重定位到-127-0-0-1-27080"><a href="#2-2-127-0-0-1-26080-重定位到-127-0-0-1-27080" class="headerlink" title="2.2 127.0.0.1:26080 重定位到 127.0.0.1:27080"></a>2.2 127.0.0.1:26080 重定位到 127.0.0.1:27080</h3><p><img src="https://i.loli.net/2020/03/13/s4Oja7CBWD2umLv.jpg" alt="-w674"></p>
 <h3 id="2-3-回显server接受信息-返回信息"><a href="#2-3-回显server接受信息-返回信息" class="headerlink" title="2.3 回显server接受信息,返回信息"></a>2.3 回显server接受信息,返回信息</h3><ul>
 <li>如果没有这个，将返回数据为 burp的代理信息给js代码，并不是burp修改后的数据。</li>
 <li>相当于将数据修改后发送到127.0.0.1:27080,然后通过requests.request 返回的数据为回显server回显出来的数据。</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="keyword">import</span> platform</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> int(platform.python_version_tuple()[<span class="number">0</span>]) &lt; <span class="number">3</span>:</span><br><span class="line">    <span class="keyword">from</span> BaseHTTPServer <span class="keyword">import</span> HTTPServer, BaseHTTPRequestHandler</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">from</span> http.server <span class="keyword">import</span> HTTPServer, BaseHTTPRequestHandler</span><br><span class="line"><span class="keyword">from</span> optparse <span class="keyword">import</span> OptionParser</span><br><span class="line">ECHO_PORT = <span class="number">27080</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RequestHandler</span><span class="params">(BaseHTTPRequestHandler)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do_REQUEST</span><span class="params">(self)</span>:</span></span><br><span class="line">        request_path = self.path</span><br><span class="line">        print(<span class="string">'Recving request connction...'</span>)</span><br><span class="line">        request_headers = self.headers</span><br><span class="line">        content_length = request_headers.getheaders(<span class="string">'content-length'</span>)</span><br><span class="line">        length = int(content_length[<span class="number">0</span>]) <span class="keyword">if</span> content_length <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        self.send_response(<span class="number">200</span>)</span><br><span class="line">        self.end_headers()</span><br><span class="line">        self.wfile.write(self.rfile.read(length))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do_RESPONSE</span><span class="params">(self)</span>:</span></span><br><span class="line">        request_path = self.path</span><br><span class="line">        print(<span class="string">'Recving Response connction...'</span>)</span><br><span class="line">        request_headers = self.headers</span><br><span class="line">        content_length = request_headers.getheaders(<span class="string">'content-length'</span>)</span><br><span class="line">        length = int(content_length[<span class="number">0</span>]) <span class="keyword">if</span> content_length <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        self.send_response(<span class="number">200</span>)</span><br><span class="line">        self.end_headers()</span><br><span class="line"></span><br><span class="line">        self.wfile.write(self.rfile.read(length))</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'Listening on localhost: %d'</span> % ECHO_PORT)</span><br><span class="line">    server = HTTPServer((<span class="string">''</span>, ECHO_PORT), RequestHandler)</span><br><span class="line">    server.serve_forever()</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    print(<span class="string">'Staring echo server on port %d'</span> % ECHO_PORT)</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-<h3 id="2-4-trace-js-测试代码-需改参数和返回值"><a href="#2-4-trace-js-测试代码-需改参数和返回值" class="headerlink" title="2.4 trace js 测试代码,需改参数和返回值"></a>2.4 trace js 测试代码,需改参数和返回值</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Called synchronously when about to call +[EncryptUtils AESEncrypt:key:].</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * @this &#123;object&#125; - Object allowing you to store state for use in onLeave.</span></span><br><span class="line"><span class="comment">   * @param &#123;function&#125; log - Call this function with a string to be presented to the user.</span></span><br><span class="line"><span class="comment">   * @param &#123;array&#125; args - Function arguments represented as an array of NativePointer objects.</span></span><br><span class="line"><span class="comment">   * For example use args[0].readUtf8String() if the first argument is a pointer to a C string encoded as UTF-8.</span></span><br><span class="line"><span class="comment">   * It is also possible to modify arguments by assigning a NativePointer object to an element of this array.</span></span><br><span class="line"><span class="comment">   * @param &#123;object&#125; state - Object allowing you to keep state across function calls.</span></span><br><span class="line"><span class="comment">   * Only one JavaScript function will execute at a time, so do not worry about race-conditions.</span></span><br><span class="line"><span class="comment">   * However, do not use this to store function arguments across onEnter/onLeave, but instead</span></span><br><span class="line"><span class="comment">   * use "this" which is an object for keeping state local to an invocation.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  onEnter: <span class="function"><span class="keyword">function</span> (<span class="params">log, args, state</span>) </span>&#123;</span><br><span class="line">    log(<span class="string">'+[EncryptUtils AESEncrypt:'</span> + args[<span class="number">2</span>] + <span class="string">' key:'</span> + args[<span class="number">3</span>] + <span class="string">']'</span>);</span><br><span class="line">    <span class="keyword">this</span>.args0=args[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">this</span>.args1=args[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">this</span>.args2=args[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">this</span>.args3=args[<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> func_name_nstring = ObjC.selectorAsString(<span class="keyword">this</span>.args1);</span><br><span class="line">    send_data=<span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">        FH_FUNC_NAME: func_name_nstring,</span><br><span class="line">        FH_ARG_COUNT: <span class="number">3</span>,</span><br><span class="line">        FH_DETAIL_OBJECT: ObjC.Object(<span class="keyword">this</span>.args0).toString(),</span><br><span class="line">        FH_DETAIL_ARG1:   ObjC.Object(<span class="keyword">this</span>.args2).toString(),</span><br><span class="line">        FH_DETAIL_ARG2:   ObjC.Object(<span class="keyword">this</span>.args3).toString(),</span><br><span class="line">        <span class="comment">// FH_DETAIL_RET: ObjC.Object(retval).toString(),</span></span><br><span class="line">    &#125;, <span class="literal">null</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    send(&#123;<span class="attr">from</span>:<span class="string">'/request'</span>, <span class="attr">payload</span>: send_data&#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> op = recv(<span class="string">'input'</span>, <span class="function"><span class="keyword">function</span> <span class="title">onMessage</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        log(<span class="string">"Waiting Input payload"</span>);</span><br><span class="line">        <span class="comment">// log(value.payload);</span></span><br><span class="line">        <span class="comment">// log("Waiting Input recv_data start");</span></span><br><span class="line">        recv_data = <span class="built_in">JSON</span>.parse(value.payload)</span><br><span class="line">        log(recv_data)</span><br><span class="line">        <span class="comment">// log("Waiting Input recv_data end");</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> NSString = ObjC.classes.NSString;</span><br><span class="line">        args[<span class="number">2</span>]  = NSString.alloc().initWithString_(recv_data[<span class="string">"FH_DETAIL_ARG1"</span>]);</span><br><span class="line">        args[<span class="number">3</span>]  = NSString.alloc().initWithString_(recv_data[<span class="string">"FH_DETAIL_ARG2"</span>]);</span><br><span class="line">    &#125;);</span><br><span class="line">    op.wait();</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Called synchronously when about to return from +[EncryptUtils AESEncrypt:key:].</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * See onEnter for details.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * @this &#123;object&#125; - Object allowing you to access state stored in onEnter.</span></span><br><span class="line"><span class="comment">   * @param &#123;function&#125; log - Call this function with a string to be presented to the user.</span></span><br><span class="line"><span class="comment">   * @param &#123;NativePointer&#125; retval - Return value represented as a NativePointer object.</span></span><br><span class="line"><span class="comment">   * @param &#123;object&#125; state - Object allowing you to keep state across function calls.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  onLeave: <span class="function"><span class="keyword">function</span> (<span class="params">log, retval, state</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(retval);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> func_name_nstring = ObjC.selectorAsString(<span class="keyword">this</span>.args1);</span><br><span class="line">    send_data=<span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">        FH_FUNC_NAME: func_name_nstring,</span><br><span class="line">        FH_DETAIL_RET: ObjC.Object(retval).toString(),</span><br><span class="line">    &#125;, <span class="literal">null</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    send(&#123;<span class="attr">from</span>:<span class="string">'/response'</span>, <span class="attr">payload</span>: send_data&#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> op = recv(<span class="string">'output'</span>, <span class="function"><span class="keyword">function</span> <span class="title">onMessage</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        log(<span class="string">"Waiting output payload"</span>);</span><br><span class="line">        <span class="comment">// log(value.payload);</span></span><br><span class="line">        <span class="comment">// log("Waiting output recv_data start");</span></span><br><span class="line">        recv_data = <span class="built_in">JSON</span>.parse(value.payload)</span><br><span class="line">        log(recv_data)</span><br><span class="line">        <span class="comment">// log("Waiting output recv_data end");</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> NSString = ObjC.classes.NSString;</span><br><span class="line">        <span class="keyword">var</span> tmp_retval = NSString.alloc().initWithString_(recv_data[<span class="string">"FH_DETAIL_RET"</span>]);</span><br><span class="line">        retval.replace(tmp_retval);</span><br><span class="line">    &#125;);</span><br><span class="line">    op.wait();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="keyword">import</span> platform</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">int</span>(platform.python_version_tuple()[<span class="number">0</span>]) &lt; <span class="number">3</span>:</span><br><span class="line">    <span class="keyword">from</span> BaseHTTPServer <span class="keyword">import</span> HTTPServer, BaseHTTPRequestHandler</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">from</span> http.server <span class="keyword">import</span> HTTPServer, BaseHTTPRequestHandler</span><br><span class="line"><span class="keyword">from</span> optparse <span class="keyword">import</span> OptionParser</span><br><span class="line">ECHO_PORT = <span class="number">27080</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RequestHandler</span>(<span class="title class_ inherited__">BaseHTTPRequestHandler</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_REQUEST</span>(<span class="params">self</span>):</span><br><span class="line">        request_path = self.path</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Recving request connction...&#x27;</span>)</span><br><span class="line">        request_headers = self.headers</span><br><span class="line">        content_length = request_headers.getheaders(<span class="string">&#x27;content-length&#x27;</span>)</span><br><span class="line">        length = <span class="built_in">int</span>(content_length[<span class="number">0</span>]) <span class="keyword">if</span> content_length <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        self.send_response(<span class="number">200</span>)</span><br><span class="line">        self.end_headers()</span><br><span class="line">        self.wfile.write(self.rfile.read(length))</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_RESPONSE</span>(<span class="params">self</span>):</span><br><span class="line">        request_path = self.path</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Recving Response connction...&#x27;</span>)</span><br><span class="line">        request_headers = self.headers</span><br><span class="line">        content_length = request_headers.getheaders(<span class="string">&#x27;content-length&#x27;</span>)</span><br><span class="line">        length = <span class="built_in">int</span>(content_length[<span class="number">0</span>]) <span class="keyword">if</span> content_length <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        self.send_response(<span class="number">200</span>)</span><br><span class="line">        self.end_headers()</span><br><span class="line"></span><br><span class="line">        self.wfile.write(self.rfile.read(length))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Listening on localhost: %d&#x27;</span> % ECHO_PORT)</span><br><span class="line">    server = HTTPServer((<span class="string">&#x27;&#x27;</span>, ECHO_PORT), RequestHandler)</span><br><span class="line">    server.serve_forever()</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Staring echo server on port %d&#x27;</span> % ECHO_PORT)</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h3 id="2-4-trace-js-测试代码-需改参数和返回值"><a href="#2-4-trace-js-测试代码-需改参数和返回值" class="headerlink" title="2.4 trace js 测试代码,需改参数和返回值"></a>2.4 trace js 测试代码,需改参数和返回值</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Called synchronously when about to call +[EncryptUtils AESEncrypt:key:].</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@this</span> &#123;<span class="type">object</span>&#125; - Object allowing you to store state for use in onLeave.</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> &#123;<span class="type">function</span>&#125; <span class="variable">log</span> - Call this function with a string to be presented to the user.</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> &#123;<span class="type">array</span>&#125; <span class="variable">args</span> - Function arguments represented as an array of NativePointer objects.</span></span><br><span class="line"><span class="comment">   * For example use args[0].readUtf8String() if the first argument is a pointer to a C string encoded as UTF-8.</span></span><br><span class="line"><span class="comment">   * It is also possible to modify arguments by assigning a NativePointer object to an element of this array.</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> &#123;<span class="type">object</span>&#125; <span class="variable">state</span> - Object allowing you to keep state across function calls.</span></span><br><span class="line"><span class="comment">   * Only one JavaScript function will execute at a time, so do not worry about race-conditions.</span></span><br><span class="line"><span class="comment">   * However, do not use this to store function arguments across onEnter/onLeave, but instead</span></span><br><span class="line"><span class="comment">   * use &quot;this&quot; which is an object for keeping state local to an invocation.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">log, args, state</span>) &#123;</span><br><span class="line">    <span class="title function_">log</span>(<span class="string">&#x27;+[EncryptUtils AESEncrypt:&#x27;</span> + args[<span class="number">2</span>] + <span class="string">&#x27; key:&#x27;</span> + args[<span class="number">3</span>] + <span class="string">&#x27;]&#x27;</span>);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">args0</span>=args[<span class="number">0</span>];</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">args1</span>=args[<span class="number">1</span>];</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">args2</span>=args[<span class="number">2</span>];</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">args3</span>=args[<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> func_name_nstring = <span class="title class_">ObjC</span>.<span class="title function_">selectorAsString</span>(<span class="variable language_">this</span>.<span class="property">args1</span>);</span><br><span class="line">    send_data=<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">        <span class="attr">FH_FUNC_NAME</span>: func_name_nstring,</span><br><span class="line">        <span class="attr">FH_ARG_COUNT</span>: <span class="number">3</span>,</span><br><span class="line">        <span class="attr">FH_DETAIL_OBJECT</span>: <span class="title class_">ObjC</span>.<span class="title class_">Object</span>(<span class="variable language_">this</span>.<span class="property">args0</span>).<span class="title function_">toString</span>(),</span><br><span class="line">        <span class="attr">FH_DETAIL_ARG1</span>:   <span class="title class_">ObjC</span>.<span class="title class_">Object</span>(<span class="variable language_">this</span>.<span class="property">args2</span>).<span class="title function_">toString</span>(),</span><br><span class="line">        <span class="attr">FH_DETAIL_ARG2</span>:   <span class="title class_">ObjC</span>.<span class="title class_">Object</span>(<span class="variable language_">this</span>.<span class="property">args3</span>).<span class="title function_">toString</span>(),</span><br><span class="line">        <span class="comment">// FH_DETAIL_RET: ObjC.Object(retval).toString(),</span></span><br><span class="line">    &#125;, <span class="literal">null</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="title function_">send</span>(&#123;<span class="attr">from</span>:<span class="string">&#x27;/request&#x27;</span>, <span class="attr">payload</span>: send_data&#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> op = <span class="title function_">recv</span>(<span class="string">&#x27;input&#x27;</span>, <span class="keyword">function</span> <span class="title function_">onMessage</span>(<span class="params">value</span>)&#123;</span><br><span class="line">        <span class="title function_">log</span>(<span class="string">&quot;Waiting Input payload&quot;</span>);</span><br><span class="line">        <span class="comment">// log(value.payload);</span></span><br><span class="line">        <span class="comment">// log(&quot;Waiting Input recv_data start&quot;);</span></span><br><span class="line">        recv_data = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(value.<span class="property">payload</span>)</span><br><span class="line">        <span class="title function_">log</span>(recv_data)</span><br><span class="line">        <span class="comment">// log(&quot;Waiting Input recv_data end&quot;);</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">NSString</span> = <span class="title class_">ObjC</span>.<span class="property">classes</span>.<span class="property">NSString</span>;</span><br><span class="line">        args[<span class="number">2</span>]  = <span class="title class_">NSString</span>.<span class="title function_">alloc</span>().<span class="title function_">initWithString_</span>(recv_data[<span class="string">&quot;FH_DETAIL_ARG1&quot;</span>]);</span><br><span class="line">        args[<span class="number">3</span>]  = <span class="title class_">NSString</span>.<span class="title function_">alloc</span>().<span class="title function_">initWithString_</span>(recv_data[<span class="string">&quot;FH_DETAIL_ARG2&quot;</span>]);</span><br><span class="line">    &#125;);</span><br><span class="line">    op.<span class="title function_">wait</span>();</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Called synchronously when about to return from +[EncryptUtils AESEncrypt:key:].</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * See onEnter for details.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@this</span> &#123;<span class="type">object</span>&#125; - Object allowing you to access state stored in onEnter.</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> &#123;<span class="type">function</span>&#125; <span class="variable">log</span> - Call this function with a string to be presented to the user.</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> &#123;<span class="type">NativePointer</span>&#125; <span class="variable">retval</span> - Return value represented as a NativePointer object.</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> &#123;<span class="type">object</span>&#125; <span class="variable">state</span> - Object allowing you to keep state across function calls.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="attr">onLeave</span>: <span class="keyword">function</span> (<span class="params">log, retval, state</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(retval);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> func_name_nstring = <span class="title class_">ObjC</span>.<span class="title function_">selectorAsString</span>(<span class="variable language_">this</span>.<span class="property">args1</span>);</span><br><span class="line">    send_data=<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">        <span class="attr">FH_FUNC_NAME</span>: func_name_nstring,</span><br><span class="line">        <span class="attr">FH_DETAIL_RET</span>: <span class="title class_">ObjC</span>.<span class="title class_">Object</span>(retval).<span class="title function_">toString</span>(),</span><br><span class="line">    &#125;, <span class="literal">null</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="title function_">send</span>(&#123;<span class="attr">from</span>:<span class="string">&#x27;/response&#x27;</span>, <span class="attr">payload</span>: send_data&#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> op = <span class="title function_">recv</span>(<span class="string">&#x27;output&#x27;</span>, <span class="keyword">function</span> <span class="title function_">onMessage</span>(<span class="params">value</span>)&#123;</span><br><span class="line">        <span class="title function_">log</span>(<span class="string">&quot;Waiting output payload&quot;</span>);</span><br><span class="line">        <span class="comment">// log(value.payload);</span></span><br><span class="line">        <span class="comment">// log(&quot;Waiting output recv_data start&quot;);</span></span><br><span class="line">        recv_data = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(value.<span class="property">payload</span>)</span><br><span class="line">        <span class="title function_">log</span>(recv_data)</span><br><span class="line">        <span class="comment">// log(&quot;Waiting output recv_data end&quot;);</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">NSString</span> = <span class="title class_">ObjC</span>.<span class="property">classes</span>.<span class="property">NSString</span>;</span><br><span class="line">        <span class="keyword">var</span> tmp_retval = <span class="title class_">NSString</span>.<span class="title function_">alloc</span>().<span class="title function_">initWithString_</span>(recv_data[<span class="string">&quot;FH_DETAIL_RET&quot;</span>]);</span><br><span class="line">        retval.<span class="title function_">replace</span>(tmp_retval);</span><br><span class="line">    &#125;);</span><br><span class="line">    op.<span class="title function_">wait</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="3-测试效果"><a href="#3-测试效果" class="headerlink" title="3.测试效果"></a>3.测试效果</h2><h3 id="3-1-burp接受函数参数包"><a href="#3-1-burp接受函数参数包" class="headerlink" title="3.1 burp接受函数参数包"></a>3.1 burp接受函数参数包</h3><p><img src="https://i.loli.net/2020/03/13/vC6QbUEVcH21rfY.jpg" alt="-w468"><br>可以进行修改，然后点击Forward</p>
 <h3 id="3-2-burp接受函数返回包"><a href="#3-2-burp接受函数返回包" class="headerlink" title="3.2 burp接受函数返回包"></a>3.2 burp接受函数返回包</h3><p><img src="https://i.loli.net/2020/03/13/Pni6xCwveEyF9UL.jpg" alt="-w504"><br>可以进行修改，然后点击Forward</p>
 <h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h2><ul>
@@ -343,7 +334,6 @@
   
   
 
-  </div>
 
 
           </div>
@@ -356,10 +346,9 @@
   
   
 
-    
 <script>
   window.addEventListener('tabs:register', () => {
-    let activeClass = CONFIG.comments.activeClass;
+    let { activeClass } = CONFIG.comments;
     if (CONFIG.comments.storage) {
       activeClass = localStorage.getItem('comments_active') || activeClass;
     }
@@ -402,7 +391,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#frida-trace扩展信息到burp"><span class="nav-text">frida-trace扩展信息到burp</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-简介"><span class="nav-text">1. 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-配置"><span class="nav-text">2. 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-frida-trace-传输到代理-127-0-0-1-26080"><span class="nav-text">2.1 frida-trace 传输到代理 127.0.0.1:26080</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-127-0-0-1-26080-重定位到-127-0-0-1-27080"><span class="nav-text">2.2 127.0.0.1:26080 重定位到 127.0.0.1:27080</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-回显server接受信息-返回信息"><span class="nav-text">2.3 回显server接受信息,返回信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-trace-js-测试代码-需改参数和返回值"><span class="nav-text">2.4 trace js 测试代码,需改参数和返回值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-测试效果"><span class="nav-text">3.测试效果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-burp接受函数参数包"><span class="nav-text">3.1 burp接受函数参数包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-burp接受函数返回包"><span class="nav-text">3.2 burp接受函数返回包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-总结"><span class="nav-text">4.总结</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#frida-trace%E6%89%A9%E5%B1%95%E4%BF%A1%E6%81%AF%E5%88%B0burp"><span class="nav-text">frida-trace扩展信息到burp</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%AE%80%E4%BB%8B"><span class="nav-text">1. 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE"><span class="nav-text">2. 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-frida-trace-%E4%BC%A0%E8%BE%93%E5%88%B0%E4%BB%A3%E7%90%86-127-0-0-1-26080"><span class="nav-text">2.1 frida-trace 传输到代理 127.0.0.1:26080</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-127-0-0-1-26080-%E9%87%8D%E5%AE%9A%E4%BD%8D%E5%88%B0-127-0-0-1-27080"><span class="nav-text">2.2 127.0.0.1:26080 重定位到 127.0.0.1:27080</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%9B%9E%E6%98%BEserver%E6%8E%A5%E5%8F%97%E4%BF%A1%E6%81%AF-%E8%BF%94%E5%9B%9E%E4%BF%A1%E6%81%AF"><span class="nav-text">2.3 回显server接受信息,返回信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-trace-js-%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81-%E9%9C%80%E6%94%B9%E5%8F%82%E6%95%B0%E5%92%8C%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-text">2.4 trace js 测试代码,需改参数和返回值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%B5%8B%E8%AF%95%E6%95%88%E6%9E%9C"><span class="nav-text">3.测试效果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-burp%E6%8E%A5%E5%8F%97%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E5%8C%85"><span class="nav-text">3.1 burp接受函数参数包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-burp%E6%8E%A5%E5%8F%97%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%8C%85"><span class="nav-text">3.2 burp接受函数返回包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%80%BB%E7%BB%93"><span class="nav-text">4.总结</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -436,10 +425,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/pandamac/pandamac.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pandamac&#x2F;pandamac.github.io" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/pandamac/pandamac.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pandamac&#x2F;pandamac.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:pandashellcode@163.com" title="E-Mail → mailto:pandashellcode@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+        <a href="mailto:pandashellcode@gmail.com" title="E-Mail → mailto:pandashellcode@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 
@@ -459,34 +448,23 @@
       <div class="footer-inner">
         
 
+        
+
 <div class="copyright">
   
-  &copy; Sun Feb 23 2020 08:00:00 GMT+0800 (China Standard Time) – 
-  <span itemprop="copyrightYear">2020</span>
+  &copy; Sun Feb 23 2020 08:00:00 GMT+0800 (中国标准时间) – 
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">pandamac</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
-    </span>
-    <span title="站点总字数">72k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">1:05</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
 <div class="busuanzi-count">
-  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-user"></i>
@@ -522,9 +500,17 @@
   <script src="/lib/pjax/pjax.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
   <script>
 var pjax = new Pjax({
   selectors: [
@@ -532,6 +518,7 @@ var pjax = new Pjax({
     '#page-configurations',
     '.content-wrap',
     '.post-toc-wrap',
+    '.languages',
     '#pjax'
   ],
   switches: {
@@ -543,7 +530,7 @@ var pjax = new Pjax({
 });
 
 window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
     var code = element.text || element.textContent || element.innerHTML || '';
     var parent = element.parentNode;
     parent.removeChild(element);
@@ -562,8 +549,8 @@ window.addEventListener('pjax:success', () => {
       // Force synchronous loading of peripheral JS.
       script.async = false;
     }
-    if (element.getAttribute('pjax') !== null) {
-      script.setAttribute('pjax', '');
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
     }
     if (code !== '') {
       script.appendChild(document.createTextNode(code));
@@ -591,7 +578,9 @@ window.addEventListener('pjax:success', () => {
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 

@@ -3,10 +3,10 @@
   <title>pandamac&#39;s Note</title>
   
   
-  <link href="/atom.xml" rel="self"/>
+  <link href="http://pandamac.github.io/atom.xml" rel="self"/>
   
   <link href="http://pandamac.github.io/"/>
-  <updated>2020-11-06T07:34:20.179Z</updated>
+  <updated>2021-11-23T07:59:06.226Z</updated>
   <id>http://pandamac.github.io/</id>
   
   <author>
@@ -21,32 +21,29 @@
     <link href="http://pandamac.github.io/2020/11/06/browser_about/CVE-2019-5782-zhaoqixun-2018-11-16%E5%8F%91-7-2/"/>
     <id>http://pandamac.github.io/2020/11/06/browser_about/CVE-2019-5782-zhaoqixun-2018-11-16%E5%8F%91-7-2/</id>
     <published>2020-11-05T19:20:11.000Z</published>
-    <updated>2020-11-06T07:34:20.179Z</updated>
+    <updated>2021-11-23T07:59:06.226Z</updated>
     
-    <summary type="html">
     
-      &lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h2 id=&quot;漏洞信息&quot;&gt;&lt;a href=&quot;#漏洞信息&quot; class=&quot;headerlink&quot; title=&quot;漏洞信息&quot;&gt;&lt;/a&gt;漏洞信息&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;- Report: Nov 2018&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- Fix: Jan 2019&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- Credit: Zhao Qixun(@S0rryMybad) of Qihoo 360 Vulcan Team&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- Similar to &amp;#96;Math.expm1&amp;#96; vulnerability.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- Wrong typer&amp;#39;s assumption caused Out-Of-Bound Read&amp;#x2F;Write&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2 id=&quot;漏洞信息&quot;&gt;&lt;a href=&quot;#漏洞信息&quot; class=&quot;headerlink&quot; title=&quot;漏洞信息&quot;&gt;&lt;/a&gt;漏洞信息&lt;/h2&gt;&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;- Report: Nov 2018&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- Fix: Jan 2019&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- Credit: Zhao Qixun(@S0rryMybad) of Qihoo 360 Vulcan Team&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- Similar to `Math.expm1` vulnerability.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- Wrong typer&amp;#x27;s assumption caused Out-Of-Bound Read/Write&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://twitter.com/S0rryMybad/status/1090438643582267394&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://twitter.com/S0rryMybad/status/1090438643582267394&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/vngkv123/aSiagaming/blob/master/Chrome-v8-906043/Chrome%20V8%20-%20-CVE-2019-5782%20Tianfu%20Cup%20Qihoo%20360%20S0rrymybad-%20-ENG-.pdf&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Write up&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://twitter.com/S0rryMybad/status/1090438643582267394&quot;&gt;https://twitter.com/S0rryMybad/status/1090438643582267394&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;fix info &lt;a href=&quot;https://chromium-review.googlesource.com/c/v8/v8/+/1363142&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://chromium-review.googlesource.com/c/v8/v8/+/1363142&lt;/a&gt;&lt;br&gt;fix commit &lt;a href=&quot;https://chromium.googlesource.com/v8/v8/+/deee0a87c0567f9e9bf18e1c8e2417c2f09d9b04&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://chromium.googlesource.com/v8/v8/+/deee0a87c0567f9e9bf18e1c8e2417c2f09d9b04&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://bugs.chromium.org/p/chromium/issues/detail?id=906043&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;bugs_chromium&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;https://github.com/vngkv123/aSiagaming/blob/master/Chrome-v8-906043/Chrome%20V8%20-%20-CVE-2019-5782%20Tianfu%20Cup%20Qihoo%20360%20S0rrymybad-%20-ENG-.pdf&quot;&gt;Write up&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;fix info &lt;a href=&quot;https://chromium-review.googlesource.com/c/v8/v8/+/1363142&quot;&gt;https://chromium-review.googlesource.com/c/v8/v8/+/1363142&lt;/a&gt;&lt;br&gt;fix commit &lt;a href=&quot;https://chromium.googlesource.com/v8/v8/+/deee0a87c0567f9e9bf18e1c8e2417c2f09d9b04&quot;&gt;https://chromium.googlesource.com/v8/v8/+/deee0a87c0567f9e9bf18e1c8e2417c2f09d9b04&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://bugs.chromium.org/p/chromium/issues/detail?id=906043&quot;&gt;bugs_chromium&lt;/a&gt; &lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;CVE-2019-5782&lt;/li&gt;
 &lt;li&gt;Blink&amp;gt;JavaScript&amp;gt;WebAssembly Blink&amp;gt;JavaScript&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;a href=&quot;https://de4dcr0w.github.io/CVE-2019-5782-v8%E6%95%B0%E7%BB%84%E8%B6%8A%E7%95%8C%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B8%8E%E5%88%A9%E7%94%A8.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;CVE-2019-5782 v8数组越界漏洞分析与利用&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
+&lt;p&gt;&lt;a href=&quot;https://de4dcr0w.github.io/CVE-2019-5782-v8%E6%95%B0%E7%BB%84%E8%B6%8A%E7%95%8C%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B8%8E%E5%88%A9%E7%94%A8.html&quot;&gt;CVE-2019-5782 v8数组越界漏洞分析与利用&lt;/a&gt;&lt;/p&gt;</summary>
     
     
-      <category term="chrome" scheme="http://pandamac.github.io/categories/chrome/"/>
+    
+    <category term="chrome" scheme="http://pandamac.github.io/categories/chrome/"/>
     
     
-      <category term="bugs" scheme="http://pandamac.github.io/tags/bugs/"/>
+    <category term="bugs" scheme="http://pandamac.github.io/tags/bugs/"/>
     
   </entry>
   
@@ -57,12 +54,10 @@
     <published>2020-05-20T07:36:37.000Z</published>
     <updated>2020-05-20T07:40:11.000Z</updated>
     
-    <summary type="html">
     
-      &lt;h1 id=&quot;linux-pwn入门学习到放弃&quot;&gt;&lt;a href=&quot;#linux-pwn入门学习到放弃&quot; class=&quot;headerlink&quot; title=&quot;linux pwn入门学习到放弃&quot;&gt;&lt;/a&gt;linux pwn入门学习到放弃&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;p&gt;PWN是一个黑客语法的俚语词，自”own”这个字引申出来的，意为玩家在整个游戏对战中处在胜利的优势。&lt;br&gt;本文记录菜鸟学习linux pwn入门的一些过程，详细介绍linux上的保护机制，分析一些常见漏洞如栈溢出,堆溢出，use after free等,以及一些常见工具集合介绍等。&lt;/p&gt;
+    <summary type="html">&lt;h1 id=&quot;linux-pwn入门学习到放弃&quot;&gt;&lt;a href=&quot;#linux-pwn入门学习到放弃&quot; class=&quot;headerlink&quot; title=&quot;linux pwn入门学习到放弃&quot;&gt;&lt;/a&gt;linux pwn入门学习到放弃&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;p&gt;PWN是一个黑客语法的俚语词，自”own”这个字引申出来的，意为玩家在整个游戏对战中处在胜利的优势。&lt;br&gt;本文记录菜鸟学习linux pwn入门的一些过程，详细介绍linux上的保护机制，分析一些常见漏洞如栈溢出,堆溢出，use after free等,以及一些常见工具集合介绍等。&lt;/p&gt;</summary>
     
-    </summary>
     
     
     
@@ -75,26 +70,24 @@
     <published>2020-04-06T03:28:58.000Z</published>
     <updated>2020-04-15T02:39:17.000Z</updated>
     
-    <summary type="html">
     
-      &lt;p&gt;[TOC]&lt;/p&gt;
-&lt;!--toc--&gt;
-    
-    </summary>
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;!--toc--&gt;</summary>
     
     
-      <category term="tools" scheme="http://pandamac.github.io/categories/tools/"/>
     
-      <category term="ida" scheme="http://pandamac.github.io/categories/tools/ida/"/>
+    <category term="tools" scheme="http://pandamac.github.io/categories/tools/"/>
     
-      <category term="tips" scheme="http://pandamac.github.io/categories/tools/ida/tips/"/>
+    <category term="ida" scheme="http://pandamac.github.io/categories/tools/ida/"/>
+    
+    <category term="tips" scheme="http://pandamac.github.io/categories/tools/ida/tips/"/>
     
     
-      <category term="ida" scheme="http://pandamac.github.io/tags/ida/"/>
+    <category term="ida" scheme="http://pandamac.github.io/tags/ida/"/>
     
-      <category term="脚本" scheme="http://pandamac.github.io/tags/script/"/>
+    <category term="脚本" scheme="http://pandamac.github.io/tags/script/"/>
     
-      <category term="tips" scheme="http://pandamac.github.io/tags/tips/"/>
+    <category term="tips" scheme="http://pandamac.github.io/tags/tips/"/>
     
   </entry>
   
@@ -105,29 +98,27 @@
     <published>2020-03-13T09:18:48.000Z</published>
     <updated>2020-03-23T14:19:47.000Z</updated>
     
-    <summary type="html">
     
-      &lt;h1 id=&quot;frida-trace扩展信息到burp&quot;&gt;&lt;a href=&quot;#frida-trace扩展信息到burp&quot; class=&quot;headerlink&quot; title=&quot;frida-trace扩展信息到burp&quot;&gt;&lt;/a&gt;frida-trace扩展信息到burp&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h2 id=&quot;1-简介&quot;&gt;&lt;a href=&quot;#1-简介&quot; class=&quot;headerlink&quot; title=&quot;1. 简介&quot;&gt;&lt;/a&gt;1. 简介&lt;/h2&gt;&lt;p&gt;参考原文&lt;a href=&quot;https://cedricvb.be/post/tracing-api-calls-in-burp-with-frida/#prettyPhoto&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Tracing API calls in Burp with Frida&lt;/a&gt;&lt;/p&gt;
+    <summary type="html">&lt;h1 id=&quot;frida-trace扩展信息到burp&quot;&gt;&lt;a href=&quot;#frida-trace扩展信息到burp&quot; class=&quot;headerlink&quot; title=&quot;frida-trace扩展信息到burp&quot;&gt;&lt;/a&gt;frida-trace扩展信息到burp&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2 id=&quot;1-简介&quot;&gt;&lt;a href=&quot;#1-简介&quot; class=&quot;headerlink&quot; title=&quot;1. 简介&quot;&gt;&lt;/a&gt;1. 简介&lt;/h2&gt;&lt;p&gt;参考原文&lt;a href=&quot;https://cedricvb.be/post/tracing-api-calls-in-burp-with-frida/#prettyPhoto&quot;&gt;Tracing API calls in Burp with Frida&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;利用frida实现一个与burp结合实时修改二进制函数参数返回值插件。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;可以burp查看frida hook的值，burp有很多非常人性化的界面可以参考。&lt;/li&gt;
 &lt;li&gt;可以burp修改hook的参数，注入测试&lt;ol&gt;
 &lt;li&gt;NSString*&lt;/li&gt;
 &lt;li&gt;NSData*&lt;/li&gt;
-&lt;li&gt;byte * or char*
-    
-    </summary>
+&lt;li&gt;byte * or char*</summary>
     
     
-      <category term="tools" scheme="http://pandamac.github.io/categories/tools/"/>
     
-      <category term="frida" scheme="http://pandamac.github.io/categories/tools/frida/"/>
+    <category term="tools" scheme="http://pandamac.github.io/categories/tools/"/>
+    
+    <category term="frida" scheme="http://pandamac.github.io/categories/tools/frida/"/>
     
     
-      <category term="frida" scheme="http://pandamac.github.io/tags/frida/"/>
+    <category term="frida" scheme="http://pandamac.github.io/tags/frida/"/>
     
-      <category term="burp" scheme="http://pandamac.github.io/tags/burp/"/>
+    <category term="burp" scheme="http://pandamac.github.io/tags/burp/"/>
     
   </entry>
   
@@ -138,25 +129,23 @@
     <published>2020-02-23T09:39:08.000Z</published>
     <updated>2020-04-15T02:43:39.000Z</updated>
     
-    <summary type="html">
     
-      &lt;p&gt;[TOC]&lt;/p&gt;
-    
-    </summary>
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;</summary>
     
     
-      <category term="tools" scheme="http://pandamac.github.io/categories/tools/"/>
     
-      <category term="lldb" scheme="http://pandamac.github.io/categories/tools/lldb/"/>
+    <category term="tools" scheme="http://pandamac.github.io/categories/tools/"/>
     
-      <category term="tips" scheme="http://pandamac.github.io/categories/tools/lldb/tips/"/>
+    <category term="lldb" scheme="http://pandamac.github.io/categories/tools/lldb/"/>
+    
+    <category term="tips" scheme="http://pandamac.github.io/categories/tools/lldb/tips/"/>
     
     
-      <category term="脚本" scheme="http://pandamac.github.io/tags/script/"/>
+    <category term="脚本" scheme="http://pandamac.github.io/tags/script/"/>
     
-      <category term="tips" scheme="http://pandamac.github.io/tags/tips/"/>
+    <category term="tips" scheme="http://pandamac.github.io/tags/tips/"/>
     
-      <category term="lldb" scheme="http://pandamac.github.io/tags/lldb/"/>
+    <category term="lldb" scheme="http://pandamac.github.io/tags/lldb/"/>
     
   </entry>
   
@@ -167,46 +156,44 @@
     <published>2020-02-21T16:28:40.000Z</published>
     <updated>2020-02-23T15:27:22.000Z</updated>
     
-    <summary type="html">
     
-      &lt;ul&gt;
+    <summary type="html">&lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#1-docset&quot;&gt;1. docset&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#11-%e9%98%85%e8%af%bb%e6%9c%ac%e7%af%87%e6%96%87%e7%ab%a0%e9%9c%80%e6%b1%82&quot;&gt;1.1. 阅读本篇文章需求&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#12-%e4%bb%80%e4%b9%88%e6%98%afdocset&quot;&gt;1.2. 什么是docset&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#13-%e5%93%aa%e9%87%8c%e5%8f%af%e4%bb%a5%e4%b8%8b%e8%bd%bddocset&quot;&gt;1.3. 哪里可以下载docset&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#14-%e4%b8%ba%e4%bb%80%e4%b9%88%e8%a6%81%e8%87%aa%e5%b7%b1%e7%94%9f%e6%88%90docset&quot;&gt;1.4. 为什么要自己生成docset&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#15-%e5%93%aa%e9%87%8c%e8%bd%af%e4%bb%b6%e6%94%af%e6%8c%81docset&quot;&gt;1.5. 哪里软件支持docset&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#11-%E9%98%85%E8%AF%BB%E6%9C%AC%E7%AF%87%E6%96%87%E7%AB%A0%E9%9C%80%E6%B1%82&quot;&gt;1.1. 阅读本篇文章需求&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#12-%E4%BB%80%E4%B9%88%E6%98%AFdocset&quot;&gt;1.2. 什么是docset&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#13-%E5%93%AA%E9%87%8C%E5%8F%AF%E4%BB%A5%E4%B8%8B%E8%BD%BDdocset&quot;&gt;1.3. 哪里可以下载docset&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#14-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%87%AA%E5%B7%B1%E7%94%9F%E6%88%90docset&quot;&gt;1.4. 为什么要自己生成docset&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#15-%E5%93%AA%E9%87%8C%E8%BD%AF%E4%BB%B6%E6%94%AF%E6%8C%81docset&quot;&gt;1.5. 哪里软件支持docset&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#151-dash&quot;&gt;1.5.1. dash&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#152-%e7%b1%bb%e4%bc%bcdash%e7%9a%84%e5%b7%a5%e5%85%b7&quot;&gt;1.5.2. 类似dash的工具&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#153-%e5%ae%98%e6%96%b9%e5%b7%a5%e5%85%b7%e6%94%af%e6%8c%81%e8%87%aa%e5%ae%9a%e4%b9%89docset&quot;&gt;1.5.3. 官方工具支持自定义docset&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#152-%E7%B1%BB%E4%BC%BCdash%E7%9A%84%E5%B7%A5%E5%85%B7&quot;&gt;1.5.2. 类似dash的工具&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#153-%E5%AE%98%E6%96%B9%E5%B7%A5%E5%85%B7%E6%94%AF%E6%8C%81%E8%87%AA%E5%AE%9A%E4%B9%89docset&quot;&gt;1.5.3. 官方工具支持自定义docset&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;#1531-doc2dash&quot;&gt;1.5.3.1. doc2dash&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#1532-dash-docset-builder&quot;&gt;1.5.3.2. dash-docset-builder&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#154-%e5%ae%98%e6%96%b9%e6%89%8b%e5%8a%a8%e6%96%b9%e6%b3%95%e8%87%aa%e5%ae%9a%e4%b9%89docset&quot;&gt;1.5.4. 官方手动方法自定义docset&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#155-%e8%87%aa%e5%ae%9a%e4%b9%89%e7%94%9f%e6%88%90docset&quot;&gt;1.5.5. 自定义生成docset&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#1551-%e8%8e%b7%e5%8f%96htm%e5%b9%b6%e7%94%9f%e6%88%90docset&quot;&gt;1.5.5.1. 获取htm,并生成docset&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#1552-%e5%88%9b%e5%bb%ba%e7%b4%a2%e5%bc%95&quot;&gt;1.5.5.2. 创建索引&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#154-%E5%AE%98%E6%96%B9%E6%89%8B%E5%8A%A8%E6%96%B9%E6%B3%95%E8%87%AA%E5%AE%9A%E4%B9%89docset&quot;&gt;1.5.4. 官方手动方法自定义docset&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#155-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%94%9F%E6%88%90docset&quot;&gt;1.5.5. 自定义生成docset&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1551-%E8%8E%B7%E5%8F%96htm%E5%B9%B6%E7%94%9F%E6%88%90docset&quot;&gt;1.5.5.1. 获取htm,并生成docset&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#1552-%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95&quot;&gt;1.5.5.2. 创建索引&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#16-%e6%80%bb%e7%bb%93&quot;&gt;1.6. 总结&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#16-%E6%80%BB%E7%BB%93&quot;&gt;1.6. 总结&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
+&lt;/ul&gt;</summary>
     
     
-      <category term="tools" scheme="http://pandamac.github.io/categories/tools/"/>
     
-      <category term="dash" scheme="http://pandamac.github.io/categories/tools/dash/"/>
+    <category term="tools" scheme="http://pandamac.github.io/categories/tools/"/>
+    
+    <category term="dash" scheme="http://pandamac.github.io/categories/tools/dash/"/>
     
     
-      <category term="docset" scheme="http://pandamac.github.io/tags/docset/"/>
+    <category term="docset" scheme="http://pandamac.github.io/tags/docset/"/>
     
-      <category term="dash" scheme="http://pandamac.github.io/tags/dash/"/>
+    <category term="dash" scheme="http://pandamac.github.io/tags/dash/"/>
     
   </entry>
   
